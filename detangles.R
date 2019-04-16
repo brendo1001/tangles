@@ -102,20 +102,22 @@ detangles<- function(xyData=NULL, tanglerInfo=NULL){
 #### END
 
 ## test it out
-#setwd("Z:/Dropbox/2019/rmuddles/deIDent/")
-#library(ithir);library(digest)
-#data("HV_subsoilpH")
-#str(HV_subsoilpH)
-#dat.xy<- HV_subsoilpH[,1:2]
-#plot(dat.xy)
-#xyData<- as.matrix(dat.xy)
-#tangles.out<- tangles(xyData = xyData, depth = 25)
+setwd("Z:/Dropbox/2019/rmuddles/deIDent/")
+library(ithir);library(digest)
+data("HV_subsoilpH")
+str(HV_subsoilpH)
+dat.xy<- HV_subsoilpH[,1:2]
+plot(dat.xy)
+xyData<- as.matrix(dat.xy)
+tangles.out<- tangles(xyData = xyData, depth = 3)
+tangles.out
+tangles.out[[2]$`hash`]
 
 ##detangles
-#tangled.dat<- readRDS("tangledXY_7cf86c89cca6207f3eff300e550d87fea09b076d090345edd77b8d8fc7fb0aaa.rds")
-#detangler.dat<- readRDS("detangler_7cf86c89cca6207f3eff300e550d87fea09b076d090345edd77b8d8fc7fb0aaa.rds")
-#str(detangler.dat)
-#xyData<- as.matrix(tangled.dat)
+tangled.dat<- readRDS("tangledXY_ca24e91b5a6d8ea35abd660692413d7a303e3fefadf20ca9b499f5a7490e6180.rds")
+detangler.dat<- readRDS("detangler_ca24e91b5a6d8ea35abd660692413d7a303e3fefadf20ca9b499f5a7490e6180.rds")
+str(detangler.dat)
+xyData<- as.matrix(tangled.dat)
 #plot(xyData)
 #origXY<- detangles(xyData = xyData, tanglerInfo = detangler.dat)
 

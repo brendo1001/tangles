@@ -2,24 +2,36 @@
 ## There are 3 types of transformation:
 # Shifting up or down (step1)
 # Shifting left ot right (step2)
-# Rotating coordinates about an origin (step3)
+# Rotating coordinates about a randomly selected origin (step3)
 # Given a selected number of depths, a step sequence is randomised
 # Spatial coordinates are transformed at each step and are then used as input for the following step
 # until we have reached the maximum depth. 
 
 ## Inputs
-# xyData: 2 column MATRIX of spatial coordinates
+# data: Can be either a 2 column MATRIX of spatial coordinates or a raster object
 # depth: the number of transformations to perfrom. Default is three
+# rasterdata: A logical. If set to TRUE the rotations will be made at right angles only. This is to preserve the nature of the raster data
+# raster_object: A logical. This is to stipulate that a raster object is to be transformed and not just a set of points
 
 ## Outputs
 # A list object that contains
-# 1. The transformed coordinates
+# 1. The transformed coordinates or transformed raster object (dpendent on the inputs)
 # 2. A seperate list object to be used for untangling the transformed coordinates
 # The outputs are written to file to the working direcotry with file stub manes of tangledXY and detangler respectively.
 # These files have a commmon hash key as part of their filename.
 # The hash key is generated from the detangler object using the sha256 hash algorithm
 
-tangles<- function(xyData=NULL, depth=3){
+tangles<- function(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE){
+  
+  # tabularise the raster data
+  if (raster_object == TRUE){
+    tempD <- data.frame(cellNos = seq(1:ncell(data)))
+    vals <- as.data.frame(getValues(data))
+    tempD<- cbind(tempD, vals)
+    tempD <- tempD[complete.cases(tempD), ]
+    cellNos <- c(tempD$cellNos)
+    gXY <- data.frame(xyFromCell(data, cellNos, spatial = FALSE))
+    xyData<- as.matrix(gXY)} else {xyData <- data}
   
   ###### Internalised Step Functions
   ## Step 1 (shifting X)
@@ -57,7 +69,10 @@ tangles<- function(xyData=NULL, depth=3){
     center[1,]<- as.matrix(x_center)
     center[2,]<- as.matrix(y_center)
     
-    deg<- sample(1:359,1, replace = F) # choose a random orientation
+    if (rasterdata == TRUE){
+      deg<- sample(c(90,180,270),1, replace = F)} else { # choose a random orientation
+        deg<- sample(1:359,1, replace = F)} # choose a random orientation
+    
     theta = (deg * pi)/180      # express in radians
     
     R = matrix(c(cos(theta), -sin(theta), sin(theta), cos(theta)), nrow=2)
@@ -73,7 +88,6 @@ tangles<- function(xyData=NULL, depth=3){
   }
   ## END Step 3 (data rotation)
   
-  ## letters and numbers randomisation
   
   ########################################## END internalised step functions
   
@@ -128,26 +142,49 @@ tangles<- function(xyData=NULL, depth=3){
   nm1<- paste0(getwd(), "/detangler_", hash.out, ".rds")
   saveRDS(object = deTangler, file = nm1)
   
-  # write revised coordinates to file
-  nm2<- paste0(getwd(), "/tangledXY_", hash.out, ".rds")
-  saveRDS(object = xyData, file = nm2)
+  # rasterise tabular data
+  if (raster_object == TRUE){
+    tDat<- cbind(xyData, tempD)
+    if (ncol(tDat) > 4){
+      rasterOuts<- stack()
+      for (z in 4:ncol(tDat)){
+        rasterOuts<- stack(rasterOuts, rasterFromXYZ(tDat[,c(1,2,z)]))}
+      } else {
+      rasterOuts<- rasterFromXYZ(tDat[,c(1,2,4)])}
+    # write revised coordinates to file
+    nm2<- paste0(getwd(), "/tangledXY_raster", hash.out, ".rds")
+    saveRDS(object = rasterOuts, file = nm2)
+    return(list(rasterOuts, deTangler))
+    } else {
+      # write revised coordinates to file
+      nm2<- paste0(getwd(), "/tangledXY_", hash.out, ".rds")
+      saveRDS(object = xyData, file = nm2)
+      return(list(xyData, deTangler))}}
 
-  return(list(xyData, deTangler))}
+    
+
   
 #### END
 
-## test it out
-#setwd("/home/malone/Dropbox/2019/rmuddles/deIDent/")
-#library(ithir);library(digest)
-#data("HV_subsoilpH")
-#str(HV_subsoilpH)
-#dat.xy<- HV_subsoilpH[,1:2]
-#xyData<- as.matrix(dat.xy)
-#tangles.out<- tangles(xyData = xyData, depth = 6)
-  
-  
+## test it out with point data
+setwd("/home/malone/Dropbox/2019/rmuddles/deIDent/")
+library(ithir);library(digest)
+data("HV_subsoilpH")
+str(HV_subsoilpH)
+dat.xy<- HV_subsoilpH[,1:2]
+xyData<- as.matrix(dat.xy)
+tangles.out<- tangles(data = xyData, depth = 5, rasterdata = FALSE, raster_object = FALSE)
+tangles.out  
+str(tangles.out)  
+head(tangles.out[[1]])
 
 
-
-
+## test it out with raster data
+library(raster)
+data("hunterCovariates_sub")
+str(hunterCovariates_sub)
+raster_object<- hunterCovariates_sub
+tangles.out<- tangles(data = hunterCovariates_sub, depth = 10, rasterdata = TRUE, raster_object = TRUE)
+tangles.out  
+str(tangles.out)  
 
