@@ -1,0 +1,22 @@
+* installing *source* package 'tangles' ...
+** R
+** data
+** byte-compile and prepare package for lazy loading
+** help
+Warning: C:/Users/MAL181/Dropbox/2019/rmuddles/deIDent/tangles/tangles.Rcheck/00_pkg_src/tangles/man/detangles.Rd:15: unknown macro '\item'
+Warning: C:/Users/MAL181/Dropbox/2019/rmuddles/deIDent/tangles/tangles.Rcheck/00_pkg_src/tangles/man/detangles.Rd:19: unexpected section header '\value'
+Warning: C:/Users/MAL181/Dropbox/2019/rmuddles/deIDent/tangles/tangles.Rcheck/00_pkg_src/tangles/man/detangles.Rd:22: unexpected section header '\note'
+Warning: C:/Users/MAL181/Dropbox/2019/rmuddles/deIDent/tangles/tangles.Rcheck/00_pkg_src/tangles/man/detangles.Rd:24: unexpected section header '\author'
+Warning: C:/Users/MAL181/Dropbox/2019/rmuddles/deIDent/tangles/tangles.Rcheck/00_pkg_src/tangles/man/detangles.Rd:26: unexpected section header '\references'
+Warning: C:/Users/MAL181/Dropbox/2019/rmuddles/deIDent/tangles/tangles.Rcheck/00_pkg_src/tangles/man/detangles.Rd:30: unexpected section header '\examples'
+Warning: C:/Users/MAL181/Dropbox/2019/rmuddles/deIDent/tangles/tangles.Rcheck/00_pkg_src/tangles/man/detangles.Rd:45: unexpected section header '\keyword'
+Warning: C:/Users/MAL181/Dropbox/2019/rmuddles/deIDent/tangles/tangles.Rcheck/00_pkg_src/tangles/man/detangles.Rd:46: unexpected END_OF_INPUT '
+'
+*** installing help indices
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded
+*** arch - i386
+*** arch - x64
+* DONE (tangles)
+In R CMD INSTALL

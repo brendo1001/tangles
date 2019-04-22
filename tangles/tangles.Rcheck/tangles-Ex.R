@@ -1,0 +1,168 @@
+pkgname <- "tangles"
+source(file.path(R.home("share"), "R", "examples-header.R"))
+options(warn = 1)
+options(pager = "console")
+base::assign(".ExTimings", "tangles-Ex.timings", pos = 'CheckExEnv')
+base::cat("name\tuser\tsystem\telapsed\n", file=base::get(".ExTimings", pos = 'CheckExEnv'))
+base::assign(".format_ptime",
+function(x) {
+  if(!is.na(x[4L])) x[1L] <- x[1L] + x[4L]
+  if(!is.na(x[5L])) x[2L] <- x[2L] + x[5L]
+  options(OutDec = '.')
+  format(x[1L:3L], digits = 7L)
+},
+pos = 'CheckExEnv')
+
+### * </HEADER>
+library('tangles')
+
+base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+cleanEx()
+nameEx("HV_subsoilpH")
+### * HV_subsoilpH
+
+flush(stderr()); flush(stdout())
+
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+### Name: detangler_data
+### Title: Example object that is output from 'tangles' function.
+### Aliases: detangler_data
+### Keywords: datasets
+
+### ** Examples
+
+library(tangles)
+data(detangler_data)
+
+
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("HV_subsoilpH", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+cleanEx()
+nameEx("hunterCovariates_sub")
+### * hunterCovariates_sub
+
+flush(stderr()); flush(stdout())
+
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+### Name: Hunter Valley covariates (subset area)
+### Title: Suite of selected environmental covariates for a subset the
+###   Lower Hunter Valley, NSW
+### Aliases: hunterCovariates_sub
+### Keywords: datasets
+
+### ** Examples
+
+library(tangles)
+library(raster)
+
+data(hunterCovariates_sub)
+
+#plot 1 of the rasters in the \code{RasterStack}
+plot(hunterCovariates_sub[["Elevation"]])
+
+
+
+
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("hunterCovariates_sub", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+cleanEx()
+nameEx("tangler")
+### * tangler
+
+flush(stderr()); flush(stdout())
+
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+### Name: tangler
+### Title: Spatial point patterns and raster objects deidentified with a
+###   given 'detangler' object.
+### Aliases: tangler tangler
+### Keywords: methods
+
+### ** Examples
+
+## POINT DATA tangles
+# library(digest)
+# data("HV_subsoilpH")
+# str(HV_subsoilpH)
+# dat.xy<- HV_subsoilpH[,1:2]
+# xyData<- as.matrix(dat.xy)
+# deidentify with 5 levels of abstraction
+# tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE)
+
+
+# tangle associated RASTER DATA
+# library(raster)
+# data("hunterCovariates_sub")
+# tangled.origi<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], raster_object = TRUE, stub = "hv1")
+
+# PLOT real
+# par(mfrow=c(1,2))
+# plot(hunterCovariates_sub[[1]], main = "original")
+# coordinates(dat.xy)<- ~ X + Y
+# plot(dat.xy, add=T)
+
+# PLOT deidentified
+# plot(tangled.origi[[1]], main = "deidentified")
+# ndat.xy<- as.data.frame(tangles.out[[1]])
+# coordinates(ndat.xy)<- ~ X + Y
+# plot(ndat.xy, add = T)
+
+
+
+
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("tangler", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+cleanEx()
+nameEx("tangles")
+### * tangles
+
+flush(stderr()); flush(stdout())
+
+base::assign(".ptime", proc.time(), pos = "CheckExEnv")
+### Name: tangles
+### Title: Deidentify spatial point patterns and raster objects
+### Aliases: tangles tangles
+### Keywords: methods
+
+### ** Examples
+
+## POINT DATA
+#library(ithir);library(digest)
+#data("HV_subsoilpH")
+#str(HV_subsoilpH)
+#dat.xy<- HV_subsoilpH[,1:2]
+#xyData<- as.matrix(dat.xy)
+# deidentify with 5 levels of abstraction
+#tangles.out<- tangles(data = xyData, depth = 5, rasterdata = FALSE, raster_object = FALSE)
+#tangles.out  
+#str(tangles.out)  
+#head(tangles.out[[1]])
+
+## RASTER DATA
+#library(raster)
+#data("hunterCovariates_sub")
+#str(hunterCovariates_sub)
+#raster_object<- hunterCovariates_sub
+#tangles.out<- tangles(data = hunterCovariates_sub, depth = 5, rasterdata = TRUE, raster_object = TRUE)
+#tangles.out  
+#str(tangles.out)
+
+
+
+
+
+base::assign(".dptime", (proc.time() - get(".ptime", pos = "CheckExEnv")), pos = "CheckExEnv")
+base::cat("tangles", base::get(".format_ptime", pos = 'CheckExEnv')(get(".dptime", pos = "CheckExEnv")), "\n", file=base::get(".ExTimings", pos = 'CheckExEnv'), append=TRUE, sep="\t")
+### * <FOOTER>
+###
+cleanEx()
+options(digits = 7L)
+base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+grDevices::dev.off()
+###
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "\\(> \\)?### [*]+" ***
+### End: ***
+quit('no')

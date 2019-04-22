@@ -1,0 +1,10 @@
+detangler_data          Example object that is output from 'tangles'
+                        function.
+detangles               Revert deidentified point pattern or raster
+                        object with a given 'detangler' object.
+hunterCovariates_sub    Suite of selected environmental covariates for
+                        a subset the Lower Hunter Valley, NSW
+tangler                 Spatial point patterns and raster objects
+                        deidentified with a given 'detangler' object.
+tangles                 Deidentify spatial point patterns and raster
+                        objects

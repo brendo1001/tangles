@@ -8,11 +8,14 @@ data("HV_subsoilpH")
 str(HV_subsoilpH)
 dat.xy<- HV_subsoilpH[,1:2]
 xyData<- as.matrix(dat.xy)
-tangles.out<- tangles(data = xyData, depth = 5, rasterdata = FALSE, raster_object = FALSE)
+tangles.out<- tangles(data = xyData, depth = 3, rasterdata = FALSE, raster_object = FALSE)
 tangles.out  
 str(tangles.out)  
 head(tangles.out[[1]])
 # tangler
+tangled.origi<- tangler(data = as.matrix(tangles.out[[1]]), tanglerInfo = tangles.out[[2]], raster_object = FALSE, stub = "hv1")
+
+
 data("HV_subsoilpH")
 str(HV_subsoilpH)
 dat.xy<- HV_subsoilpH[,1:2]
@@ -59,16 +62,15 @@ data("HV_subsoilpH")
 str(HV_subsoilpH)
 dat.xy<- HV_subsoilpH[,1:2]
 xyData<- as.matrix(dat.xy)
-tangles.out<- tangles(data = xyData, depth = 15, rasterdata = TRUE, raster_object = FALSE) 
+tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE) 
 tangles.out  
 
 # tangle raster data based on tangled points
 data("hunterCovariates_sub")
 str(hunterCovariates_sub)
-detangler.dat<- readRDS("detangler_5f47b108227d1b405b88b70a4abbcfe25c6563f8e4801ef7f5fae10d776143e8.rds")
-str(detangler.dat)
 
-tangled.origi<- tangler(data = hunterCovariates_sub, tanglerInfo = detangler.dat, raster_object = TRUE, stub = "hv1")
+
+tangled.origi<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], raster_object = TRUE, stub = "hv1")
 tangled.origi
 plot(tangled.origi[[1]])
 
@@ -81,14 +83,41 @@ plot(tp, add=T)
 ## detangles
 # points 
 xyData<- as.matrix(tangles.out[[1]])
-detangler.dat<- readRDS("detangler_5f47b108227d1b405b88b70a4abbcfe25c6563f8e4801ef7f5fae10d776143e8.rds")
-str(detangler.dat)
-point_detang<- detangles(data=xyData, tanglerInfo=detangler.dat, raster_object = FALSE, stub = "hv_fix")
+point_detang<- detangles(data=xyData, tanglerInfo=tangles.out[[2]], raster_object = FALSE, stub = "hv_fix", hash_key = "9ec140a1ed5ff8f80cbd10c7f92abe6a595d2b6ea85c719c3593d0ccc693c179")
 
 #rasters
-raster_detang<- detangles(data=tangled.origi, tanglerInfo=detangler.dat, raster_object = TRUE, stub = "hv_fix")
+raster_detang<- detangles(data=tangled.origi, tanglerInfo=tangles.out[[2]], raster_object = TRUE, stub = "hv_fix", hash_key = "9ec140a1ed5ff8f80cbd10c7f92abe6a595d2b6ea85c719c3593d0ccc693c179")
 plot(raster_detang[[1]])
 
 pdat<- as.data.frame(point_detang)
 coordinates(pdat)<- ~X + Y
 plot(pdat, add=T)
+
+
+
+## POINT DATA tangles
+library(ithir);library(digest)
+data("HV_subsoilpH")
+str(HV_subsoilpH)
+dat.xy<- HV_subsoilpH[,1:2]
+xyData<- as.matrix(dat.xy)
+# deidentify with 5 levels of abstraction
+tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE)
+
+
+# tangle associated RASTER DATA
+library(raster)
+data("hunterCovariates_sub")
+tangled.origi<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], raster_object = TRUE, stub = "hv1")
+
+# PLOT real
+par(mfrow=c(1,2))
+plot(hunterCovariates_sub[[1]])
+coordinates(dat.xy)<- ~ X + Y
+plot(dat.xy, add=T)
+
+# PLOT deidentified
+plot(tangled.origi[[1]])
+ndat.xy<- as.data.frame(tangles.out[[1]])
+coordinates(ndat.xy)<- ~ X + Y
+plot(ndat.xy, add = T)

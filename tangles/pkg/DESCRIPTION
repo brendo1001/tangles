@@ -1,0 +1,13 @@
+Package: tangles
+Type: Package
+Title: Spatial de-identification of point patterns and raster objects
+Version: 0.0.1
+Date: 2019-04-18
+Authors@R: c(person("Brendan", "Malone", email = "brendan.malone@csiro.au", role = c("cre", "aut")))
+Description: Spatial deidentification
+Depends: R (>= 3.0.1)
+Imports: raster, digest
+Suggests: rasterVis, rgdal, sp
+License: GPL-2
+LazyData: no
+Encoding: UTF-8

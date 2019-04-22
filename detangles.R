@@ -1,17 +1,26 @@
-## Function for untangling transformed coordinates back to original XY coordinates
-## Reverses the steps of the tangle function
+## Function for untangling transformed coordinates back to original XY coordinates or rasters
+## Reverses the steps of the tangles function
 
 
 
 ## Inputs
-# tranData: 2 column MATRIX of transformed spatial coordinates
-# tanglerInfo: object the was saved from the tangle function that has the steps and parameters need to untangle.
+# data: 2 column MATRIX of transformed spatial coordinates or transformed raster object
+# tanglerInfo: object the was saved from the tangle function that has the steps and parameters need to do the untangle.
 
 ## Outputs
-# The original spatial point pattern
+# The original spatial point pattern or rasters
 
 
-detangles<- function(xyData=NULL, tanglerInfo=NULL){
+detangles<- function(data=NULL, tanglerInfo=NULL, raster_object = FALSE, stub = NULL){
+  
+  if (raster_object == TRUE){
+    tempD <- data.frame(cellNos = seq(1:ncell(data)))
+    vals <- as.data.frame(getValues(data))
+    tempD<- cbind(tempD, vals)
+    tempD <- tempD[complete.cases(tempD), ]
+    cellNos <- c(tempD$cellNos)
+    gXY <- data.frame(xyFromCell(data, cellNos, spatial = FALSE))
+    xyData<- as.matrix(gXY)} else {xyData <- data}
   
   ###### Internalised Step Functions
   ## Step 1 (shifting X)
@@ -92,37 +101,25 @@ detangles<- function(xyData=NULL, tanglerInfo=NULL){
   hash.out<- tanglerInfo$hash
   ## Need capture output to save hash key to a readme file
   
-  
-  # write revised coordinates to file
-  nm2<- paste0(getwd(), "/detangledXY_", hash.out, ".rds")
-  saveRDS(object = xyData, file = nm2)
+  # rasterise tabular data
+  if (raster_object == TRUE){
+    tDat<- cbind(xyData, tempD)
+    if (ncol(tDat) > 4){
+      rasterOuts<- stack()
+      for (z in 4:ncol(tDat)){
+        rasterOuts<- stack(rasterOuts, rasterFromXYZ(tDat[,c(1,2,z)]))}
+    } else {
+      rasterOuts<- rasterFromXYZ(tDat[,c(1,2,4)])}
+    # write revised coordinates to file
+    nm2<- paste0(getwd(), "/detangledXY_raster",stub, "_", hash.out, ".rds")
+    saveRDS(object = rasterOuts, file = nm2)
+    return(rasterOuts)} else {
+      # write revised coordinates to file
+      nm2<- paste0(getwd(), "/detangledXY_",stub, "_", hash.out, ".rds")
+      saveRDS(object = xyData, file = nm2)
+      return(xyData)}}
 
-  return(xyData)}
   
 #### END
-
-## test it out
-setwd("Z:/Dropbox/2019/rmuddles/deIDent/")
-library(ithir);library(digest)
-data("HV_subsoilpH")
-str(HV_subsoilpH)
-dat.xy<- HV_subsoilpH[,1:2]
-plot(dat.xy)
-xyData<- as.matrix(dat.xy)
-tangles.out<- tangles(xyData = xyData, depth = 3)
-tangles.out
-tangles.out[[2]$`hash`]
-
-##detangles
-tangled.dat<- readRDS("tangledXY_ca24e91b5a6d8ea35abd660692413d7a303e3fefadf20ca9b499f5a7490e6180.rds")
-detangler.dat<- readRDS("detangler_ca24e91b5a6d8ea35abd660692413d7a303e3fefadf20ca9b499f5a7490e6180.rds")
-str(detangler.dat)
-xyData<- as.matrix(tangled.dat)
-#plot(xyData)
-#origXY<- detangles(xyData = xyData, tanglerInfo = detangler.dat)
-
-# test
-#plot(dat.xy, cex=0.25)
-#points(origXY, col="red")
 
 
