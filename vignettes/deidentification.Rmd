@@ -1,3 +1,4 @@
+
 ---
 title: "Deidentification of spatial point patterns and raster objects."
 author: "Malone, B."
@@ -28,10 +29,6 @@ The main driver behind this package is secrecy. Secrecy in an open world (sharin
 library(tangles);library(digest);library(raster);library(sp)
 ```
 
-
-## Getting data from SLGA
-
-The function *getSLGA_data* retrieves SLGA data. It is designed to extract: organic carbon (%), soil texture fractions (sand, silt, and clay), and bulk density (kg/m3). Data is extracts for all depth internals to 1m. The function requires a vector of coordinates representing to point location (longitude and latitude) where data is retrieved from. It also requires a folder directory, as the function physically downloads raster data before extraction of the data at the given point location.
 
 
 
