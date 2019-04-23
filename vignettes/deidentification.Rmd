@@ -10,7 +10,18 @@ vignette: >
 ---
 
 ## Introduction
-This demo provides some context and use cases of the three functions that make up the *tangles* R package. 
+This demo provides some context and use cases of the three functions that make up the *tangles* R package. You might ask, what does this package do? and why do we need such functionality? 
+
+The main driver behind this package is secrecy. Secrecy in an open world (sharing) world are essenitally two contradictory terms. How can you have both? Science these days is becoming more and more open. People conduct research, design experiemnts, write manuscripts and and anlayse results. Nowadays, the whole process of scientific research is moving from behind closed doors, to a completely open system for all to scrutinise, but more importantly to contribute.. All research is to be reproducable, and one can no longer hide behind domain centered terminiolgy, or undeciphereable mathematical equations to get something published and attain peer recognition. If you dont sahre, and you dont open your research work to be openly scrutinized, the academic path will increasingly become more difficult. We are in the age of colloboration. But we still need secracy. In particular, we need spatial deidentification. We might want to share the greatest modelling approach ever known, but we do not necessarily want to show exactly where that work was conducted. The results could be sigigicant and this could be to the advancmeent or detriment of the place where the research was conducted. So we need secracy, but we do want to ensure that one has the best methods and approaches available to them to conduct research. This is where the *tangles* packages comes in.
+
+*tangles* deidentifies spatial data. By deidentify, i mean the spatial cordinates pertaing to a set of data -- which tag it to some spefici location on the earth's surface, are altered in such a way, so that the orogial location can never be known (unless the exact key is found to untangle the transofremd data back to their original form). The model is based on a owner and user concept. The owner has the tools to do the spatial deidentifcation, then shares the deidentified data with the user. The user conducts whichever spatial analysis is to be done on the data, then shares the results back with th owner, who them re-identifies the data. The user never needs to know the real spatial locations. However it is important that any porcess in the de-identifcation does not alter the spatial properteis of the orginal data, such as autocorrealtion, co-variance and seperation disctances. *tangles* achieves this. Specifically, *tangles* has 3 modes of deidentification:
+
+* Vertical shifts
+* Horizontal shifts
+* Rotational shifts
+
+
+*tangles* achieves deidentification by randomisation of the shift mode, value associated with the shift mode. For both vertical and horizontal shifts, a random interger between 1 and a very large number is chosen. For rotaional shifts, the rotation degree, and pivot point are chosen at random. The user inidcates how many deindentifcation steps to go with (this is called depth and by default is set to 3), and then *tangles* goes about its work. The owner never has to 
 
 
 ```{r libraries, echo=T, eval= T, message=FALSE, warning= FALSE}
