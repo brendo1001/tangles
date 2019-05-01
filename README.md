@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/brendo1001/tangles.svg?token=55jxxyTm43o2mnqrHBvX&branch=master)
+![Build Status](https://travis-ci.com/brendo1001/tangles.svg?token=55jxxyTm43o2mnqrHBvX&branch=master)
 
 # Tangles
 An R package for deidentification of spatial point patterns and raster objects.
