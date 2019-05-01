@@ -46,7 +46,8 @@ The most important output to come from this function is the detangler object (sa
 #data("hunterCovariates_sub")
 #str(hunterCovariates_sub)
 #raster_object<- hunterCovariates_sub
-#tangles.out<- tangles(data = hunterCovariates_sub, depth = 5, rasterdata = TRUE, raster_object = TRUE)
+#tangles.out<- tangles(data = hunterCovariates_sub, depth = 5, 
+#                      rasterdata = TRUE, raster_object = TRUE)
 #tangles.out  
 #str(tangles.out)
 

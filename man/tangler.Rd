@@ -42,7 +42,8 @@
 # tangle associated RASTER DATA
 # library(raster)
 # data("hunterCovariates_sub")
-# tangled.origi<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], raster_object = TRUE, stub = "hv1")
+# tangled.origi<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], 
+#                          raster_object = TRUE, stub = "hv1")
 
 # PLOT real
 # par(mfrow=c(1,2))

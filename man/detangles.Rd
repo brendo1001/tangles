@@ -39,7 +39,9 @@
 
 # detangle
 # xyData<- as.matrix(tangles.out[[1]])
-# point_detang<- detangles(data=xyData, tanglerInfo=tangles.out[[2]], raster_object = FALSE, stub = "hv_fix", hash_key = "Enter In Hash Key Here")
+# point_detang<- detangles(data=xyData, 
+#                  tanglerInfo=tangles.out[[2]], raster_object = FALSE, 
+#                 stub = "hv_fix", hash_key = "Enter In Hash Key Here")
 }
 
 \keyword{methods}

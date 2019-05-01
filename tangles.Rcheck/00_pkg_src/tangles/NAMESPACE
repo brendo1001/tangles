@@ -1,6 +1,0 @@
-importFrom("raster", ncell, getValues, xyFromCell, stack, rasterFromXYZ)
-importFrom("digest", digest)
-
-export(tangles)
-export(tangler)
-export(detangles)
