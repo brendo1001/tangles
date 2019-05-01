@@ -1,13 +1,14 @@
 Package: tangles
 Type: Package
-Title: Spatial de-identification of point patterns and raster objects
-Version: 0.0.1
+Title: Spatial deidentification of spatial point patterns and raster objects
+Version: 0.8.1
 Date: 2019-04-18
 Authors@R: c(person("Brendan", "Malone", email = "brendan.malone@csiro.au", role = c("cre", "aut")))
-Description: Spatial deidentification
+Description: This package performs spatial deidentification of non-gridded spatial point patterns and raster objects.
 Depends: R (>= 3.0.1)
 Imports: raster, digest
-Suggests: rasterVis, rgdal, sp
+Suggests: rasterVis, rgdal, sp, knitr, rmarkdown
+VignetteBuilder: knitr
 License: GPL-2
 LazyData: no
 Encoding: UTF-8
