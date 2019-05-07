@@ -1,10 +1,10 @@
 Package: tangles
 Type: Package
-Title: Spatial deidentification of spatial point patterns and raster objects
+Title: Anonymization of Spatial Point Patterns and Raster Objects
 Version: 0.8.1
 Date: 2019-04-18
 Authors@R: c(person("Brendan", "Malone", email = "brendan.malone@csiro.au", role = c("cre", "aut")))
-Description: This package performs spatial deidentification of non-gridded spatial point patterns and raster objects.
+Description: Spatial data anonymization preserves confidentiality. Using methods described in Armstrong et al. (1999) <doi:10.1002/(SICI)1097-0258(19990315)18:5<497::AID-SIM45>3.0.CO;2-#>, spatial data anonymization is achieved by dithering original spatial coordinates with combinations of randomized vertical, horizontal and rotational shifts. This can apply to non-grid spatial point patterns and raster objects, and the methods preserve the same spatial characteristics and relationships of the original data. Unique hash keying enables data subjected to anonymization sequences to be re-identified where required.  
 Depends: R (>= 3.0.1)
 Imports: raster, digest
 Suggests: rasterVis, rgdal, sp, knitr, rmarkdown

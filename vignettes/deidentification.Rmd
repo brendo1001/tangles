@@ -1,10 +1,10 @@
 ---
-title: "Deidentification of spatial point patterns and raster objects."
+title: "Anonymization of Spatial Point Patterns and Raster Objects."
 author: "Malone, B."
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Deidentification}
+  %\VignetteIndexEntry{Anonymization}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,25 +12,25 @@ vignette: >
 ## Introduction
 This demo provides some context and use cases of the three functions that make up the `tangles` R package. You might ask, what does this package do? and why do we need such functionality? 
 
-The main driver behind this package is secrecy. Secrecy in an open (-sharing) world are seemingly contradictory terms. How can you have both? Science these days is becoming more and more open. People conduct research, design experiments, write manuscripts and and analyse results. Nowadays, the whole process of scientific research is moving from behind closed doors, to a completely open system for all to scrutinize, but more importantly to contribute. Idealistically, all research is to be reproducible, and one can no longer hide behind domain centered terminology, or undecipherable mathematical equations to get something published and attain peer recognition. If you don't share, and you don't open your research work to be openly scrutinized, the academic path will increasingly become more difficult. We are in the age of collaboration. 
+The main driver behind this package is confidentiality. Confidentiality in an open (-sharing) world are seemingly contradictory terms. How can you have both? Science these days is becoming more and more open. People conduct research, design experiments, write manuscripts and and analyse results. Nowadays, the whole process of scientific research is moving from behind closed doors, to a completely open system for all to scrutinize, but more importantly to contribute. Idealistically, all research is to be reproducible, and one can no longer hide behind domain centered terminology, or undecipherable mathematical equations to get something published and attain peer recognition. If you don't share, and you don't open your research work to be openly scrutinized, the academic path will increasingly become more difficult. We are in the age of collaboration. 
 
-But we still need secrecy. In particular, we need spatial deidentification. We might want to share the greatest spatial modelling approach ever known, but we do not necessarily want to show exactly where that work was conducted. The results could be significant and this could be to the advancement or detriment of the place where the research was conducted. So we need secrecy, but we do want to ensure that one has the best methods and approaches available to them to conduct research. This is where the `tangles` packages comes in.
+But we still need confidentiality. In particular, we need spatial anonymization. We might want to share the greatest spatial modelling approach ever known, but we do not necessarily want to show exactly where that work was conducted. The results could be significant and this could be to the advancement or detriment of the place where the research was conducted. So we need confidentiality, but we do want to ensure that one has the best methods and approaches available to them to conduct research. This is where the `tangles` packages comes in.
 
-`tangles` deidentifies spatial data. By deidentify, i mean the spatial coordinates pertaining to a set of data -- which tag it to some specific location on the earth's surface, are altered in such a way, so that the original location can never be known (unless the exact key is found to disentangle the transformed data back to their original form). The model is based on a owner and user concept. The owner has the tools to do the spatial deidentification, then shares the deidentified data with the user. The user conducts whichever spatial analysis is to be done on the data, then shares the results back with the owner, who then re-identifies the data. The user never needs to know the real spatial locations. However it is important that any process in the deidentification does not alter the spatial properties of the original data, such as autocorrelation, co-variance and separation distances. `tangles` achieves this. Specifically, `tangles` has 3 modes of deidentification:
+`tangles` anonymizes spatial data. By anonymization, i mean the spatial coordinates pertaining to a set of data -- which tag it to some specific location on the earth's surface, are altered in such a way, so that the original location can never be known (unless the exact key is found to disentangle the transformed data back to their original form). The model is based on a owner and user concept. The owner has the tools to do the spatial anonymization, then shares the anonymized data with the user. The user conducts whichever spatial analysis is to be done on the data, then shares the results back with the owner, who then re-identifies the data. The user never needs to know the real spatial locations. However it is important that any process in the anonymization does not alter the spatial properties of the original data, such as autocorrelation, co-variance and separation distances. `tangles` achieves this. Specifically, `tangles` has 3 modes of anonymization:
 
 * Vertical shifts
 * Horizontal shifts
 * Rotational shifts
 
 
-`tangles` achieves deidentification by randomization of the shift mode and values associated with the shift mode. For both vertical and horizontal shifts, a random integer between a very small number and a very large number is chosen. For rotational shifts, the rotation degree, and pivot point are chosen at random. The user indicates how many deidentification steps to go with (this is called depth and by default is set to 3), and then `tangles` goes about its work. Other than specifying the depth of entanglement, the owner never needs to know the modes or values that went into do it. The user is none the wiser, as the spatial properties will remain as for the the original data, but may be a little perplexed that the coordinates don't map them to any particular place on earth. Original data may be given in Lat and Longs or Eastings and Northings, and be encoded to a given coordinate reference system, but `tangles` is completely agnostic of this. It just does the deidentification, and as long as we retain those entangling steps, the user can always get back to the original spatial coordinates. 
+`tangles` achieves anonymization by randomization of the shift mode and values associated with the shift mode. For both vertical and horizontal shifts, a random integer between a very small number and a very large number is chosen. For rotational shifts, the rotation degree, and pivot point are chosen at random. The user indicates how many anonymization steps to go with (this is called depth and by default is set to 3), and then `tangles` goes about its work. Other than specifying the depth of entanglement, the owner never needs to know the modes or values that went into do it. The user is none the wiser, as the spatial properties will remain as for the the original data, but may be a little perplexed that the coordinates don't map to any particular place on earth. Original data may be given in Lat and Longs or Eastings and Northings, and be encoded to a given coordinate reference system, but `tangles` is completely agnostic of this. It just does the anonymization, and as long as we retain those entangling steps, the user can always get back to the original spatial coordinates. 
 
-The above point leads to the next point about `tangles` which is to do with the unique tagging of a deidentification. A deidentification is appended with a hash key, which embodies the entanglement process, but more importantly, ensures explicit tracking and linking of data. The hash key system ensures that the exact entanglement and dentanglement steps are carried out as intended. There is no second guessing or approximation. If hashes between data and entanglement do not match, `tangles` will not go to work!
+The above point leads to the next point about `tangles` which is to do with the unique tagging of an anonymization. The anonymization is appended with a hash key, which embodies the entanglement process, but more importantly, ensures explicit tracking and linking of data. The hash key system ensures that the exact entanglement and dentanglement steps are carried out as intended. There is no second guessing or approximation. If hashes between data and entanglement do not match, `tangles` will not go to work!
 
 We should probably now dig into some examples before things get too esoteric. `tangles` has 3 functions:
 
-* `tangles` - Deidentifies spatial point patterns and raster objects
-* `tangler` - For a given entanglement process (which is aptly called a detangler object), spatial point patterns and raster objects are deidentified accordingly.
+* `tangles` - Anonymizes spatial point patterns and raster objects
+* `tangler` - For a given entanglement process (which is aptly called a detangler object), spatial point patterns and raster objects are anonymized accordingly.
 * `detangles` - For a given detangler object, spatial point patterns and raster objects are reverted back to their original coordinates.
 
 Lets take a look at how we might use these functions with a contrived example using some available data. 
@@ -53,7 +53,7 @@ data("hunterCovariates_sub")
 
 
 ## Shifting modes
-At the heart of `tangles` are the shifting modes that each on their own provides a mechanism for changing the original spatial coordinates. Used collectively they tangle up the original data so as to be completely unrecognizable. 
+At the heart of `tangles` are the shifting modes that each on their own provides a mechanism for changing the original spatial coordinates. Used collectively they tangle up the original data so as to be anonymized. 
 
 ### Vertical and horizontal shifts
 
