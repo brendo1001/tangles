@@ -1,8 +1,8 @@
 \name{detangles}
 \docType{methods}
 \alias{detangles}
-\title{Revert deidentified point pattern or raster object}
-\description{Deidentified spatial data can be reverted back to their original coordinates with a given detangler object. For correct re-identification, there is an assumed match in the hash key between deidentified data and detangler object.}
+\title{Revert anonymized point patterns or raster objects}
+\description{Anonymized spatial data can be reverted back to their original coordinates with a given detangler object. For correct re-identification, there is an assumed match in the hash key between anonymized data and detangler object.}
 
 \usage{detangles(data=NULL, tanglerInfo=NULL, raster_object = FALSE, stub = NULL, hash_key=NULL)}
 
@@ -11,7 +11,7 @@
 \item{tanglerInfo}{output from \code{tangles} which encodes the steps and values of the re-identification process.}
 \item{raster_object}{logical; If \code{TRUE} the data to be re-identified is a raster object. This means the data associated with the raster are carried through to the outputs.}
 \item{stub}{Character; A string of user-defined setting for establishing naming conventions.}
-\item{hash_key}{Character; A string of the hash key that was used for the original deidentification.}
+\item{hash_key}{Character; A string of the hash key that was used for the original anonymization.}
 }
 
 \value{The transformed coordinates or raster object (dependent on input data).}
@@ -34,7 +34,7 @@
 # str(HV_subsoilpH)
 # dat.xy<- HV_subsoilpH[,1:2]
 # xyData<- as.matrix(dat.xy)
-# deidentify with 5 levels of abstraction
+# anonymize with 5 levels of abstraction
 # tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE)
 
 # detangle

@@ -1,11 +1,11 @@
 ![Build Status](https://travis-ci.com/brendo1001/tangles.svg?token=55jxxyTm43o2mnqrHBvX&branch=master)
 
 # Tangles
-An R package for deidentification of spatial point patterns and raster objects.
+An R package for anonymization of spatial point patterns and raster objects.
 
-This package achieves the relatively simple, yet pretty useful task of spatial deidentification. Deidentification is needed in situations where a data owner may not wish to share the actual spatial locations of their data, but allows sharing of the data that does not preclude the data from a spatial analysis procedure. 
+This package achieves the relatively simple, yet pretty useful task of spatial anonymization. Anonymization is needed in situations where a data owner may not wish to share the actual spatial locations of their data, but allows sharing of the data that does not preclude the data from a spatial analysis procedure. 
 
-Deidentification is achieved via 3 modes of spatial shifts:
+Anonymization is achieved via 3 modes of spatial shifts:
 
 * Vertical shifts
 * Lateral shifts
