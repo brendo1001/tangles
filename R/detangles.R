@@ -6,12 +6,13 @@
 ## Inputs
 # data: 2 column MATRIX of transformed spatial coordinates or transformed raster object
 # tanglerInfo: object the was saved from the tangle function that has the steps and parameters need to do the untangle.
+# saveTangles: save outputs of function to file
 
 ## Outputs
 # The original spatial point pattern or rasters
 
 
-detangles<- function(data=NULL, tanglerInfo=NULL, raster_object = FALSE, stub = NULL, hash_key=NULL){
+detangles<- function(data=NULL, tanglerInfo=NULL, raster_object = FALSE, stub = NULL, hash_key=NULL, saveTangles = FALSE){
   
   #check for hash key match
   if(as.character(tanglerInfo[1]) != hash_key){
@@ -117,11 +118,13 @@ detangles<- function(data=NULL, tanglerInfo=NULL, raster_object = FALSE, stub = 
       rasterOuts<- rasterFromXYZ(tDat[,c(1,2,4)])}
     # write revised coordinates to file
     nm2<- paste0(getwd(), "/detangledXY_raster",stub, "_", hash.out, ".rds")
-    saveRDS(object = rasterOuts, file = nm2)
+    if (saveTangles == TRUE){
+    saveRDS(object = rasterOuts, file = nm2)}
     return(rasterOuts)} else {
       # write revised coordinates to file
       nm2<- paste0(getwd(), "/detangledXY_",stub, "_", hash.out, ".rds")
-      saveRDS(object = xyData, file = nm2)
+      if (saveTangles == TRUE){
+      saveRDS(object = xyData, file = nm2)}
       return(xyData)}}
 
   

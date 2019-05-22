@@ -12,6 +12,7 @@
 # depth: the number of transformations to perfrom. Default is three
 # rasterdata: A logical. If set to TRUE the rotations will be made at right angles only. This is to preserve the nature of the raster data
 # raster_object: A logical. This is to stipulate that a raster object is to be transformed and not just a set of points
+# saveTangles: save outputs of function to file
 
 ## Outputs
 # A list object that contains
@@ -21,7 +22,7 @@
 # These files have a commmon hash key as part of their filename.
 # The hash key is generated from the detangler object using the sha256 hash algorithm
 
-tangles<- function(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE){
+tangles<- function(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE, saveTangles = FALSE){
   
   # tabularise the raster data
   if (raster_object == TRUE){
@@ -140,7 +141,8 @@ tangles<- function(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE
   
   # write de-tangler to file
   nm1<- paste0(getwd(), "/detangler_", hash.out, ".rds")
-  saveRDS(object = deTangler, file = nm1)
+  if (saveTangles == TRUE){
+  saveRDS(object = deTangler, file = nm1)}
   
   # rasterise tabular data
   if (raster_object == TRUE){
@@ -153,12 +155,14 @@ tangles<- function(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE
       rasterOuts<- rasterFromXYZ(tDat[,c(1,2,4)])}
     # write revised coordinates to file
     nm2<- paste0(getwd(), "/tangledXY_raster", hash.out, ".rds")
-    saveRDS(object = rasterOuts, file = nm2)
+    if (saveTangles == TRUE){
+    saveRDS(object = rasterOuts, file = nm2)}
     return(list(rasterOuts, deTangler))
     } else {
       # write revised coordinates to file
       nm2<- paste0(getwd(), "/tangledXY_", hash.out, ".rds")
-      saveRDS(object = xyData, file = nm2)
+      if (saveTangles == TRUE){
+      saveRDS(object = xyData, file = nm2)}
       return(list(xyData, deTangler))}}
 
     
