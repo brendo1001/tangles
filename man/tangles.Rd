@@ -4,13 +4,15 @@
 \title{Anonymize spatial point patterns and raster objects}
 \description{Spatial coordinates are anonymized by using three possible techniques of altering locations without loss of the spatial relationships between data. The three techniques are vertical, horizontal and rotational shifts. User defines how many steps to use in the anonymization. The actual steps taken are randomized and saved for later use.}
 
-\usage{tangles(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE)}
+\usage{tangles(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE, 
+saveTangles = FALSE)}
 
 \arguments{
   \item{data}{Can be either a 2 column \code{matrix} of spatial coordinates or a \code{raster} object.} 
   \item{depth}{numeric; the number of anonymization steps to take (levels of abstraction). Default is 3.}     
   \item{rasterdata}{logical; If \code{TRUE} the rotational degrees will be taken as either 90, 180 or 270 degrees rather than randomly selected. This is to preserve the properties of a raster if raster data is to be anonymized.}
   \item{raster_object}{logical; If \code{TRUE} the data to be anonymized is a raster object. This means the data associated with the raster are carried through to the outputs.}
+  \item{saveTangles}{logical; Save function output to file. Default is \code{FALSE}, but it is recommended to always save outputs.}
 }
 
 \value{A \code{list} object that contains: 1. The transformed coordinates or transformed raster object (dependent on the inputs). 2. A separate list object to be used for untangling the transformed coordinates. The outputs are written to file to the working directory with file stub names of \code{tangledXY} and \code{detangler} respectively.These files have a common hash key as part of their file name.The hash key is generated from the detangler object using the sha256 hash algorithm}
@@ -30,26 +32,35 @@ The most important output to come from this function is the detangler object (sa
 
 \examples{
 ## POINT DATA
-#library(ithir);library(digest)
-#data("HV_subsoilpH")
-#str(HV_subsoilpH)
-#dat.xy<- HV_subsoilpH[,1:2]
-#xyData<- as.matrix(dat.xy)
+library(digest)
+data("HV_subsoilpH")
+str(HV_subsoilpH)
+dat.xy<- HV_subsoilpH[,1:2]
+xyData<- as.matrix(dat.xy)
+
 # anonymize with 5 levels of abstraction
-#tangles.out<- tangles(data = xyData, depth = 5, rasterdata = FALSE, raster_object = FALSE)
-#tangles.out  
-#str(tangles.out)  
-#head(tangles.out[[1]])
+tangles.out<- tangles(data = xyData, 
+depth = 5, 
+rasterdata = FALSE, 
+raster_object = FALSE, 
+saveTangles = FALSE)
+
+str(tangles.out)  
+head(tangles.out[[1]])
 
 ## RASTER DATA
-#library(raster)
-#data("hunterCovariates_sub")
-#str(hunterCovariates_sub)
-#raster_object<- hunterCovariates_sub
-#tangles.out<- tangles(data = hunterCovariates_sub, depth = 5, 
-#                      rasterdata = TRUE, raster_object = TRUE)
-#tangles.out  
-#str(tangles.out)
+library(raster)
+data("hunterCovariates_sub")
+str(hunterCovariates_sub)
+raster_object<- hunterCovariates_sub
+
+tangles.out<- tangles(data = hunterCovariates_sub, 
+depth = 5, 
+rasterdata = TRUE, 
+raster_object = TRUE,
+saveTangles = FALSE)
+
+str(tangles.out)
 
 
 }

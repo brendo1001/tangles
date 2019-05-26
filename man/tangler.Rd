@@ -5,14 +5,15 @@
 \title{Spatial point patterns and raster objects anonymized with a given \code{detangler} object.}
 \description{For a given \code{detangler} object, spatial coordinates are anonymized accordingly.}
 
-\usage{tangler(data=NULL, tanglerInfo = NULL, raster_object = FALSE, stub = NULL)}
+\usage{tangler(data=NULL, tanglerInfo = NULL, raster_object = FALSE, stub = NULL, 
+saveTangles = FALSE)}
 
 \arguments{
   \item{data}{Can be either a 2 column \code{matrix} of spatial coordinates or a \code{raster} object.} 
   \item{tanglerInfo}{output from \code{tangles} which encodes the steps and values of the anonymization process.}
   \item{raster_object}{logical; If \code{TRUE} the data to be anonymized is a raster object. This means the data associated with the raster are carried through to the outputs.}
   \item{stub}{Character; A string of user-defined setting for establishing naming conventions.}
-  
+  \item{saveTangles}{logical; Save function output to file. Default is \code{FALSE}, but it is recommended to always save outputs.}
 }
 
 \value{The transformed coordinates or raster object (dependent on input data).}
@@ -30,32 +31,31 @@
 
 \examples{
 ## POINT DATA tangles
-# library(digest)
-# data("HV_subsoilpH")
-# str(HV_subsoilpH)
-# dat.xy<- HV_subsoilpH[,1:2]
-# xyData<- as.matrix(dat.xy)
+library(digest)
+data("HV_subsoilpH")
+str(HV_subsoilpH)
+dat.xy<- HV_subsoilpH[,1:2]
+xyData<- as.matrix(dat.xy)
+
 # anonymize with 5 levels of abstraction
-# tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE)
+tangles.out<- tangles(data = xyData, 
+depth = 5, 
+rasterdata = TRUE, 
+raster_object = FALSE,
+saveTangles = FALSE)
 
 
 # tangle associated RASTER DATA
-# library(raster)
-# data("hunterCovariates_sub")
-# tangled.origi<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], 
-#                          raster_object = TRUE, stub = "hv1")
+library(raster)
+data("hunterCovariates_sub")
 
-# PLOT real
-# par(mfrow=c(1,2))
-# plot(hunterCovariates_sub[[1]], main = "original")
-# coordinates(dat.xy)<- ~ X + Y
-# plot(dat.xy, add=T)
+tangled.origi<- tangler(data = hunterCovariates_sub, 
+tanglerInfo = tangles.out[[2]], 
+raster_object = TRUE, 
+stub = "hv1", 
+saveTangles = FALSE)
 
-# PLOT anonymized
-# plot(tangled.origi[[1]], main = "anonymized")
-# ndat.xy<- as.data.frame(tangles.out[[1]])
-# coordinates(ndat.xy)<- ~ X + Y
-# plot(ndat.xy, add = T)
+
 
 }
 

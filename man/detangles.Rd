@@ -4,7 +4,8 @@
 \title{Revert anonymized point patterns or raster objects}
 \description{Anonymized spatial data can be reverted back to their original coordinates with a given detangler object. For correct re-identification, there is an assumed match in the hash key between anonymized data and detangler object.}
 
-\usage{detangles(data=NULL, tanglerInfo=NULL, raster_object = FALSE, stub = NULL, hash_key=NULL)}
+\usage{detangles(data=NULL, tanglerInfo=NULL, raster_object = FALSE, stub = NULL, hash_key=NULL,
+ saveTangles = FALSE)}
 
 \arguments{
 \item{data}{Can be either a 2 column \code{matrix} of spatial coordinates or a \code{raster} object.} 
@@ -12,6 +13,7 @@
 \item{raster_object}{logical; If \code{TRUE} the data to be re-identified is a raster object. This means the data associated with the raster are carried through to the outputs.}
 \item{stub}{Character; A string of user-defined setting for establishing naming conventions.}
 \item{hash_key}{Character; A string of the hash key that was used for the original anonymization.}
+\item{saveTangles}{logical; Save function output to file. Default is \code{FALSE}, but it is recommended to always save outputs.}
 }
 
 \value{The transformed coordinates or raster object (dependent on input data).}
@@ -29,19 +31,29 @@
 \examples{
 
 ## POINT DATA tangles
-# library(digest)
-# data("HV_subsoilpH")
-# str(HV_subsoilpH)
-# dat.xy<- HV_subsoilpH[,1:2]
-# xyData<- as.matrix(dat.xy)
+library(digest)
+data("HV_subsoilpH")
+str(HV_subsoilpH)
+dat.xy<- HV_subsoilpH[,1:2]
+xyData<- as.matrix(dat.xy)
+
 # anonymize with 5 levels of abstraction
-# tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE)
+tangles.out<- tangles(data = xyData, 
+depth = 5, 
+rasterdata = TRUE, 
+raster_object = FALSE,
+saveTangles = FALSE)
 
 # detangle
-# xyData<- as.matrix(tangles.out[[1]])
-# point_detang<- detangles(data=xyData, 
-#                  tanglerInfo=tangles.out[[2]], raster_object = FALSE, 
-#                 stub = "hv_fix", hash_key = "Enter In Hash Key Here")
+xyData<- as.matrix(tangles.out[[1]])
+
+point_detang<- detangles(data=xyData, 
+tanglerInfo=tangles.out[[2]], 
+raster_object = FALSE, 
+stub = "hv_fix", 
+hash_key = tangles.out[[2]][1],
+saveTangles = FALSE)
+
 }
 
 \keyword{methods}

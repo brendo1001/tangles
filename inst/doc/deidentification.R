@@ -68,16 +68,16 @@ data("hunterCovariates_sub")
 
 ## ----tangles, echo=T, eval= T, message=FALSE, warning= FALSE-------------
 xyData<- as.matrix(HV_subsoilpH[,1:2])
-tangles.out<- tangles(data = xyData, depth = 3, rasterdata = FALSE, raster_object = FALSE)
+tangles.out<- tangles(data = xyData, depth = 3, rasterdata = FALSE, raster_object = FALSE, saveTangles = FALSE)
 str(tangles.out)  
 
 ## ----tangler, echo=T, eval= T, message=FALSE, warning= FALSE-------------
 # First entangle the point pattern
 xyData<- as.matrix(HV_subsoilpH[,1:2])
-tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE)
+tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE, saveTangles = FALSE)
 
 # Now entangle the raster object
-tangler.out<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], raster_object = TRUE, stub = "myname")
+tangler.out<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], raster_object = TRUE, stub = "myname", saveTangles = FALSE)
 
 ## ----t_plot, echo=T, eval= T, message=FALSE, warning= FALSE,fig.width=7, fig.height=5----
 # Plotting
@@ -95,7 +95,7 @@ plot(tangler.out[[1]], main="tangled data");plot(tPP, add=T)
 ## ----detangles, echo=T, eval= F, message=FALSE, warning= FALSE-----------
 #  # points
 #  xyData<- as.matrix(tangles.out[[1]])
-#  point_detang<- detangles(data=xyData, tanglerInfo=tangles.out[[2]], raster_object = FALSE, stub = "hv_fix", hash_key = "UNIQUE_HASH_KEY_HERE")
+#  point_detang<- detangles(data=xyData, tanglerInfo=tangles.out[[2]], raster_object = FALSE, stub = "hv_fix", hash_key = "UNIQUE_HASH_KEY_HERE", saveTangles = FALSE)
 #  
 #  #rasters
 #  raster_detang<- detangles(data=tangled.origi, tanglerInfo=tangles.out[[2]], raster_object = TRUE, stub = "hv_fix", hash_key = "UNIQUE_HASH_KEY_HERE")
