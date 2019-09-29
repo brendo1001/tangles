@@ -12,11 +12,11 @@
 # The original spatial point pattern or rasters
 
 
-detangles<- function(data=NULL, tanglerInfo=NULL, raster_object = FALSE, stub = NULL, hash_key=NULL, saveTangles = FALSE){
+detangles<- function(data=NULL, tanglerInfo=NULL, raster_object = FALSE, stub = NULL, hash_key=NULL, saveTangles = FALSE, path = NULL){
   
   #check for hash key match
   if(as.character(tanglerInfo[1]) != hash_key){
-    stop("ERROR: detangler object does not match these deidentified data")
+    stop("ERROR: detangler object does not match these de-identified data")
   }
   
   if (raster_object == TRUE){
@@ -117,12 +117,12 @@ detangles<- function(data=NULL, tanglerInfo=NULL, raster_object = FALSE, stub = 
     } else {
       rasterOuts<- rasterFromXYZ(tDat[,c(1,2,4)])}
     # write revised coordinates to file
-    nm2<- paste0(getwd(), "/detangledXY_raster",stub, "_", hash.out, ".rds")
+    nm2<- paste0(path, "/detangledXY_raster",stub, "_", hash.out, ".rds")
     if (saveTangles == TRUE){
     saveRDS(object = rasterOuts, file = nm2)}
     return(rasterOuts)} else {
       # write revised coordinates to file
-      nm2<- paste0(getwd(), "/detangledXY_",stub, "_", hash.out, ".rds")
+      nm2<- paste0(path, "/detangledXY_",stub, "_", hash.out, ".rds")
       if (saveTangles == TRUE){
       saveRDS(object = xyData, file = nm2)}
       return(xyData)}}

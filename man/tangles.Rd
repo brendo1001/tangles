@@ -5,7 +5,7 @@
 \description{Spatial coordinates are anonymized by using three possible techniques of altering locations without loss of the spatial relationships between data. The three techniques are vertical, horizontal and rotational shifts. User defines how many steps to use in the anonymization. The actual steps taken are randomized and saved for later use.}
 
 \usage{tangles(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE, 
-saveTangles = FALSE)}
+saveTangles = FALSE, path = NULL)}
 
 \arguments{
   \item{data}{Can be either a 2 column \code{matrix} of spatial coordinates or a \code{raster} object.} 
@@ -13,9 +13,10 @@ saveTangles = FALSE)}
   \item{rasterdata}{logical; If \code{TRUE} the rotational degrees will be taken as either 90, 180 or 270 degrees rather than randomly selected. This is to preserve the properties of a raster if raster data is to be anonymized.}
   \item{raster_object}{logical; If \code{TRUE} the data to be anonymized is a raster object. This means the data associated with the raster are carried through to the outputs.}
   \item{saveTangles}{logical; Save function output to file. Default is \code{FALSE}, but it is recommended to always save outputs.}
+  \item{path}{character; Path to where outputs are saved.}
 }
 
-\value{A \code{list} object that contains: 1. The transformed coordinates or transformed raster object (dependent on the inputs). 2. A separate list object to be used for untangling the transformed coordinates. The outputs are written to file to the working directory with file stub names of \code{tangledXY} and \code{detangler} respectively.These files have a common hash key as part of their file name.The hash key is generated from the detangler object using the sha256 hash algorithm}
+\value{A \code{list} object that contains: 1. The transformed coordinates or transformed raster object (dependent on the inputs). 2. A separate list object to be used for untangling the transformed coordinates. The outputs can be written to file to a specified directory with file stub names of \code{tangledXY} and \code{detangler} respectively.These files have a common hash key as part of their file name.The hash key is generated from the detangler object using the sha256 hash algorithm}
 
 
 \note{Raster data can in practice be rotated for any given angle, yet the linear horizontal and vertical properties of the raster will be lost, meaning that no software will be able to recognize it as a raster. This why there is the \code{rasterdata} parameter exists, and can be used for both raster and non-raster data. It just constrains the possible degree values that can be used in the anonymization. If raster data is being anonymized both \code{rasterdata} and \code{raster_object} will be set to \code{TRUE} in most cases.

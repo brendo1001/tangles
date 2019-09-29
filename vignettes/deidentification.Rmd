@@ -23,7 +23,7 @@ But we still need confidentiality. In particular, we need spatial anonymization.
 * Rotational shifts
 
 
-`tangles` achieves anonymization by randomization of the shift mode and values associated with the shift mode. For both vertical and horizontal shifts, a random integer between a very small number and a very large number is chosen. For rotational shifts, the rotation degree, and pivot point are chosen at random. The user indicates how many anonymization steps to go with (this is called depth and by default is set to 3), and then `tangles` goes about its work. Other than specifying the depth of entanglement, the owner never needs to know the modes or values that went into do it. The user is none the wiser, as the spatial properties will remain as for the the original data, but may be a little perplexed that the coordinates don't map to any particular place on earth. Original data may be given in Lat and Longs or Eastings and Northings, and be encoded to a given coordinate reference system, but `tangles` is completely agnostic of this. It just does the anonymization, and as long as we retain those entangling steps, the user can always get back to the original spatial coordinates. 
+`tangles` achieves anonymization by randomization of the shift mode and values associated with the shift mode. For both vertical and horizontal shifts, a random integer between a very small number and a very large number is chosen. For rotational shifts, the rotation degree, and pivot point are chosen at random. The user indicates how many anonymization steps to go with (this is called abstraction depth and by default is set to 3), and then `tangles` goes about its work. Other than specifying the depth of entanglement, the owner never needs to know the modes or values that went into do it. The user is none the wiser, as the spatial properties will remain as for the the original data, but may be a little perplexed that the coordinates don't map to any particular place on earth. Original data may be given in Lat and Longs or Eastings and Northings, and be encoded to a given coordinate reference system, but `tangles` is completely agnostic of this. It just does the anonymization, and as long as we retain those entangling steps, the user can always get back to the original spatial coordinates. 
 
 The above point leads to the next point about `tangles` which is to do with the unique tagging of an anonymization. The anonymization is appended with a hash key, which embodies the entanglement process, but more importantly, ensures explicit tracking and linking of data. The hash key system ensures that the exact entanglement and dentanglement steps are carried out as intended. There is no second guessing or approximation. If hashes between data and entanglement do not match, `tangles` will not go to work!
 
@@ -124,15 +124,15 @@ Using the `xyData` example again, rotational shifting is slightly more involved.
 
 Note that for point pattern data we could choose at random any degree value to rotate the data by. The same goes for raster data too, but you will run into issues of trying to rasterise the entangled data because the raster is based on straight vertical and horizontal grid cells, and any rotation outside of right angles will throw any error that says something along the lines of 'this data is not and can not be a raster'. Therefore if you want to continue using raster data you will be constrained to use rotations of 90, 180, and 270 degrees. 
 
-From each of the shift modes, we want to keep the values that were randomly selected if we have any hope of disentangling the data, or entangling further data using the same steps. Therefore it is imperative we retain the shift distance from the vertical and horizontal shifting and the coordinates of the pivot point and degree value for the rotational shifting. Note that when we run `tangles` we specify the depth, and the function just chooses at random which mode shifts to perform. Ultimately we just want saved the sequence of mode shifts that were used, and the associated values of the shifts. 
+From each of the shift modes, we want to keep the values that were randomly selected if we have any hope of disentangling the data, or entangling further data using the same steps. Therefore it is imperative we retain the shift distance from the vertical and horizontal shifting and the coordinates of the pivot point and degree value for the rotational shifting. Note that when we run `tangles` we specify the abstraction depth, and the function just chooses at random which mode shifts to perform. Ultimately we just want saved the sequence of mode shifts that were used, and the associated values of the shifts. 
 
 ## The `tangles` function
 
-The `tangles` function has four inputs. First the is `data` which is where we specify the data that we wish to entangle. Currently it can take 2-column matrix of coordinates and raster objects, including stacks. `depth` is the number of steps of entanglement we want to use, where the default is 3. `rasterdata` is a logical parameter to inform the function that for rotational shifts, the rotations will use only right-angle degrees. We would generally use this option for when we have raster data, but we can also use it when we have non-gridded point patterns. `raster_object` is also a logical and just informs the function that the data that needs to be entangled is a raster format as these data are treated slightly differently compared to non-gridded point patterns. `saveTangles` lets you save the function outputs. The default is `FALSE` but when set to `TRUE` the function outputs will save to a specified directory or just the working direcotry if one is not specified. It is highly recommended that outputs are saved to file
+The `tangles` function has four inputs. First the is `data` which is where we specify the data that we wish to entangle. Currently it can take 2-column matrix of coordinates and raster objects, including stacks. `depth` is the number of steps of entanglement we want to use, where the default is 3. `rasterdata` is a logical parameter to inform the function that for rotational shifts, the rotations will use only right-angle degrees. We would generally use this option for when we have raster data, but we can also use it when we have non-gridded point patterns. `raster_object` is also a logical and just informs the function that the data that needs to be entangled is a raster format as these data are treated slightly differently compared to non-gridded point patterns. `saveTangles` lets you save the function outputs. The default is `FALSE` but when set to `TRUE` the function outputs will save to a specified directory or just the working directory. You will need to indicate this in the `path` parameter. It is highly recommended that outputs are saved to file
 
 ```{r tangles, echo=T, eval= T, message=FALSE, warning= FALSE}
 xyData<- as.matrix(HV_subsoilpH[,1:2])
-tangles.out<- tangles(data = xyData, depth = 3, rasterdata = FALSE, raster_object = FALSE, saveTangles = FALSE)
+tangles.out<- tangles(data = xyData, depth = 3, rasterdata = FALSE, raster_object = FALSE, saveTangles = TRUE, path = "C:/Temp/")
 str(tangles.out)  
 ```
 
@@ -140,15 +140,15 @@ The outputs of `tangles` contains a list with two elements. The first element is
 
 ## The `tangler` function
 
-`tangler` is to be used when we have already tangled a given dataset and wish to entangle an additional dataset with the same detangling object. For example we may have a non-gridded point pattern corresponding to observational data , together with associated raster data. So we may wish to firstly entangle to observation data then use the detangling object to entangle the raster data. Doing so conserves the spatial relationships as if they were in the original format. This is what we do below in the following example. `tangler` has 4 parameters. First there is `data`, the data we wish to entangle. Then there is `tanglerInfo` which is the detangling object, which is an output of the `tangles` function. `raster_object` is a logical to specify whether the data to be entangled is a raster object or not. `stub` allows the data owner to enter in a character string in the naming of the file that is exported (if specified in the `saveTangles` parameter) containing the entangled data whether it be just coordinates or a raster object. The file that is exported to the working directory is of the `.rds` format and will also contain the unique hash key in the filename.
+`tangler` is to be used when we have already tangled a given dataset and wish to entangle an additional dataset with the same detangling object. For example we may have a non-gridded point pattern corresponding to observational data , together with associated raster data. So we may wish to firstly entangle to observation data then use the detangling object to entangle the raster data. Doing so conserves the spatial relationships as if they were in the original format. This is what we do below in the following example. `tangler` has 4 parameters. First there is `data`, the data we wish to entangle. Then there is `tanglerInfo` which is the detangling object, which is an output of the `tangles` function. `raster_object` is a logical to specify whether the data to be entangled is a raster object or not. `stub` allows the data owner to enter in a character string in the naming of the file that is exported (if specified in the `saveTangles` parameter) containing the entangled data whether it be just coordinates or a raster object. The file that is exported to the specified directory (as given in `path`) is of the `.rds` format and will also contain the unique hash key in the filename.
 
 ```{r tangler, echo=T, eval= T, message=FALSE, warning= FALSE}
 # First entangle the point pattern
 xyData<- as.matrix(HV_subsoilpH[,1:2])
-tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE, saveTangles = FALSE)
+tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE, saveTangles = TRUE, path = "C:/Temp/")
 
 # Now entangle the raster object
-tangler.out<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], raster_object = TRUE, stub = "myname", saveTangles = FALSE)
+tangler.out<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], raster_object = TRUE, stub = "myname", saveTangles = TRUE, path = "C:/Temp/")
 ```
 
 
@@ -175,10 +175,10 @@ plot(tangler.out[[1]], main="tangled data");plot(tPP, add=T)
 ```{r detangles, echo=T, eval= F, message=FALSE, warning= FALSE}
 # points 
 xyData<- as.matrix(tangles.out[[1]])
-point_detang<- detangles(data=xyData, tanglerInfo=tangles.out[[2]], raster_object = FALSE, stub = "hv_fix", hash_key = "UNIQUE_HASH_KEY_HERE", saveTangles = FALSE)
+point_detang<- detangles(data=xyData, tanglerInfo=tangles.out[[2]], raster_object = FALSE, stub = "hv_fix", hash_key = "UNIQUE_HASH_KEY_HERE", saveTangles = TRUE, path = "C:/Temp/")
 
 #rasters
-raster_detang<- detangles(data=tangled.origi, tanglerInfo=tangles.out[[2]], raster_object = TRUE, stub = "hv_fix", hash_key = "UNIQUE_HASH_KEY_HERE")
+raster_detang<- detangles(data=tangled.origi, tanglerInfo=tangles.out[[2]], raster_object = TRUE, stub = "hv_fix", hash_key = "UNIQUE_HASH_KEY_HERE", saveTangles = TRUE, path = "C:/Temp/")
 ```
 
 

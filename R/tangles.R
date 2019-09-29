@@ -18,11 +18,11 @@
 # A list object that contains
 # 1. The transformed coordinates or transformed raster object (dpendent on the inputs)
 # 2. A seperate list object to be used for untangling the transformed coordinates
-# The outputs are written to file to the working direcotry with file stub nanes of tangledXY and detangler respectively.
+# The outputs are optinally written to file to the working directory with file stub nanes of tangledXY and detangler respectively.
 # These files have a commmon hash key as part of their filename.
 # The hash key is generated from the detangler object using the sha256 hash algorithm
 
-tangles<- function(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE, saveTangles = FALSE){
+tangles<- function(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE, saveTangles = FALSE, path = NULL){
   
   # tabularise the raster data
   if (raster_object == TRUE){
@@ -140,7 +140,7 @@ tangles<- function(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE
   deTangler<- list(hash = hash.out, step_sequence= step.random, unpicker= seq.dat)
   
   # write de-tangler to file
-  nm1<- paste0(getwd(), "/detangler_", hash.out, ".rds")
+  nm1<- paste0(path, "/detangler_", hash.out, ".rds")
   if (saveTangles == TRUE){
   saveRDS(object = deTangler, file = nm1)}
   
@@ -154,13 +154,13 @@ tangles<- function(data=NULL, depth=3, rasterdata = FALSE, raster_object = FALSE
       } else {
       rasterOuts<- rasterFromXYZ(tDat[,c(1,2,4)])}
     # write revised coordinates to file
-    nm2<- paste0(getwd(), "/tangledXY_raster", hash.out, ".rds")
+    nm2<- paste0(path, "/tangledXY_raster", hash.out, ".rds")
     if (saveTangles == TRUE){
     saveRDS(object = rasterOuts, file = nm2)}
     return(list(rasterOuts, deTangler))
     } else {
       # write revised coordinates to file
-      nm2<- paste0(getwd(), "/tangledXY_", hash.out, ".rds")
+      nm2<- paste0(path, "/tangledXY_", hash.out, ".rds")
       if (saveTangles == TRUE){
       saveRDS(object = xyData, file = nm2)}
       return(list(xyData, deTangler))}}

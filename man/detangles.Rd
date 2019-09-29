@@ -4,8 +4,9 @@
 \title{Revert anonymized point patterns or raster objects}
 \description{Anonymized spatial data can be reverted back to their original coordinates with a given detangler object. For correct re-identification, there is an assumed match in the hash key between anonymized data and detangler object.}
 
-\usage{detangles(data=NULL, tanglerInfo=NULL, raster_object = FALSE, stub = NULL, hash_key=NULL,
- saveTangles = FALSE)}
+\usage{detangles(data=NULL, tanglerInfo=NULL, raster_object = FALSE, 
+stub = NULL, hash_key=NULL, 
+saveTangles = FALSE, path = NULL)}
 
 \arguments{
 \item{data}{Can be either a 2 column \code{matrix} of spatial coordinates or a \code{raster} object.} 
@@ -14,12 +15,13 @@
 \item{stub}{Character; A string of user-defined setting for establishing naming conventions.}
 \item{hash_key}{Character; A string of the hash key that was used for the original anonymization.}
 \item{saveTangles}{logical; Save function output to file. Default is \code{FALSE}, but it is recommended to always save outputs.}
+\item{path}{character; Path to where outputs are saved.}
 }
 
 \value{The transformed coordinates or raster object (dependent on input data).}
 
 
-\note{Outputs are also saved to the working directory with the hash key associated with the \code{detangler} object and user-defined stub in the file name. This will be saved as an \code{.rds} file.}
+\note{Outputs can be saved to any specified directory with the hash key associated with the \code{detangler} object and user-defined stub in the file name. This will be saved as an \code{.rds} file.}
 
 \author{Brendan Malone}
 

@@ -12,7 +12,7 @@
 ## Outputs
 # 1. The transformed coordinates or raster object (dependent on input data)
 
-tangler<- function(data=NULL, tanglerInfo = NULL, raster_object = FALSE, stub = NULL, saveTangles = FALSE){
+tangler<- function(data=NULL, tanglerInfo = NULL, raster_object = FALSE, stub = NULL, saveTangles = FALSE, path = NULL){
   
   if (raster_object == TRUE){
     tempD <- data.frame(cellNos = seq(1:ncell(data)))
@@ -110,12 +110,12 @@ tangler<- function(data=NULL, tanglerInfo = NULL, raster_object = FALSE, stub = 
     } else {
       rasterOuts<- rasterFromXYZ(tDat[,c(1,2,4)])}
     # write revised coordinates to file
-    nm2<- paste0(getwd(), "/tanglerXY_",stub, "_", hash.out, ".rds")
+    nm2<- paste0(path, "/tanglerXY_",stub, "_", hash.out, ".rds")
     if (saveTangles == TRUE){
     saveRDS(object = rasterOuts, file = nm2)}
     return(rasterOuts)} else {
       # write revised coordinates to file
-      nm2<- paste0(getwd(), "/tanglerXY_",stub, "_", hash.out, ".rds")
+      nm2<- paste0(path, "/tanglerXY_",stub, "_", hash.out, ".rds")
       if (saveTangles == TRUE){
       saveRDS(object = xyData, file = nm2)}
       return(xyData)}}
