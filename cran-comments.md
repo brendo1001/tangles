@@ -51,7 +51,7 @@ Please fix and resubmit.
 ## Test environments
 * local windows laptop, R 3.5.1
 * Ubuntu 14.04.5 LTS (on travis-ci), R 3.6.0
-* Unbuntu 18.04 LTS laptop, R 3.5.2
+* Unbuntu 18.04 LTS laptop, R 3.6.0
 
 
 ## R CMD check results

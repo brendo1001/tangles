@@ -132,7 +132,7 @@ The `tangles` function has four inputs. First the is `data` which is where we sp
 
 ```{r tangles, echo=T, eval= T, message=FALSE, warning= FALSE}
 xyData<- as.matrix(HV_subsoilpH[,1:2])
-tangles.out<- tangles(data = xyData, depth = 3, rasterdata = FALSE, raster_object = FALSE, saveTangles = TRUE, path = "C:/Temp/")
+tangles.out<- tangles(data = xyData, depth = 3, rasterdata = FALSE, raster_object = FALSE, saveTangles = TRUE, path = tempdir())
 str(tangles.out)  
 ```
 
@@ -145,10 +145,10 @@ The outputs of `tangles` contains a list with two elements. The first element is
 ```{r tangler, echo=T, eval= T, message=FALSE, warning= FALSE}
 # First entangle the point pattern
 xyData<- as.matrix(HV_subsoilpH[,1:2])
-tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE, saveTangles = TRUE, path = "C:/Temp/")
+tangles.out<- tangles(data = xyData, depth = 5, rasterdata = TRUE, raster_object = FALSE, saveTangles = TRUE, path = tempdir())
 
 # Now entangle the raster object
-tangler.out<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], raster_object = TRUE, stub = "myname", saveTangles = TRUE, path = "C:/Temp/")
+tangler.out<- tangler(data = hunterCovariates_sub, tanglerInfo = tangles.out[[2]], raster_object = TRUE, stub = "myname", saveTangles = TRUE, path = tempdir())
 ```
 
 
@@ -175,10 +175,10 @@ plot(tangler.out[[1]], main="tangled data");plot(tPP, add=T)
 ```{r detangles, echo=T, eval= F, message=FALSE, warning= FALSE}
 # points 
 xyData<- as.matrix(tangles.out[[1]])
-point_detang<- detangles(data=xyData, tanglerInfo=tangles.out[[2]], raster_object = FALSE, stub = "hv_fix", hash_key = "UNIQUE_HASH_KEY_HERE", saveTangles = TRUE, path = "C:/Temp/")
+point_detang<- detangles(data=xyData, tanglerInfo=tangles.out[[2]], raster_object = FALSE, stub = "hv_fix", hash_key = "UNIQUE_HASH_KEY_HERE", saveTangles = TRUE, path = tempdir())
 
 #rasters
-raster_detang<- detangles(data=tangled.origi, tanglerInfo=tangles.out[[2]], raster_object = TRUE, stub = "hv_fix", hash_key = "UNIQUE_HASH_KEY_HERE", saveTangles = TRUE, path = "C:/Temp/")
+raster_detang<- detangles(data=tangled.origi, tanglerInfo=tangles.out[[2]], raster_object = TRUE, stub = "hv_fix", hash_key = "UNIQUE_HASH_KEY_HERE", saveTangles = TRUE, path = tempdir())
 ```
 
 
