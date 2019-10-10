@@ -62,3 +62,33 @@ Please fix and resubmit.
 
 ## Downstream dependencies
 There are currently no downstream dependencies for this package
+
+## CRAN RESPONSE
+There are examples in comments in HV_subsoilpH.Rd Please either omit comments or examples.
+
+Please always make sure to reset to user's options, wd or par after you changed it in examples and vignettes.
+e.g.: vignette
+oldpar <- par(mfrow = c(1,2))
+...
+par(oldpar)
+
+
+# comments 10/10/19: Tangles 0.8.1 ##
+
+## Test environments
+* local windows laptop, R 3.5.1
+* Ubuntu 14.04.5 LTS (on travis-ci), R 3.6.0
+* Unbuntu 18.04 LTS laptop, R 3.6.0
+
+
+## R CMD check results
+* 0 errors 
+* 0 warnings
+* 0 notes
+
+
+## Downstream dependencies
+There are currently no downstream dependencies for this package
+
+## CRAN RESPONSE
+
