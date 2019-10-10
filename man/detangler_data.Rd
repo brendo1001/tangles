@@ -17,6 +17,5 @@
 }}
 
 \examples{
-library(tangles)
 data(detangler_data)}
 \keyword{datasets}

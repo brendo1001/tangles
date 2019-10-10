@@ -38,9 +38,8 @@ Soil Security Laboratory, 2015. Use R for Digital Soil Mapping Manual. The Unive
 }
 
 \examples{
-library(tangles)
-library(raster)
 
+library(raster)
 data(hunterCovariates_sub)
 
 #plot 1 of the rasters in the \code{RasterStack}

@@ -36,9 +36,8 @@ Soil Security Laboratory, 2015. Use R for Digital Soil Mapping Manual. The Unive
 }
 
 \examples{
-#library(tangles)
-#data(HV_subsoilpH)
-#summary(HV_subsoilpH)
+data(HV_subsoilpH)
+summary(HV_subsoilpH)
 
 }
 \keyword{datasets}

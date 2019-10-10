@@ -156,7 +156,6 @@ Plotting both the original point pattern and grid together with their entangled 
 
 ```{r t_plot, echo=T, eval= T, message=FALSE, warning= FALSE,fig.width=7, fig.height=5}
 # Plotting
-par(mfrow=c(1,2))
 # original data
 pHV_subsoilpH<- HV_subsoilpH
 coordinates(pHV_subsoilpH)<- ~ X + Y
