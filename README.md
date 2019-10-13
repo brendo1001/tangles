@@ -21,5 +21,9 @@ Installation of `tangles` can be achieved via [Github](https://github.com/) usin
 
 `devtools::install_github("brendo1001/tangles")`
 
+or via [CRAN](https://cran.r-project.org/):
+
+`install.packages("tangles")`
+
 ## Contact
 `brendan.malone@csiro.au`
