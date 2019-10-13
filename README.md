@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/brendo1001/tangles.svg?token=55jxxyTm43o2mnqrHBvX&branch=master)
+![Build Status](https://travis-ci.com/brendo1001/tangles.svg?token=55jxxyTm43o2mnqrHBvX&branch=master)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tangles)](https://cran.r-project.org/package=tangles)
 [![Total_Downloads](http://cranlogs.r-pkg.org/badges/grand-total/tangles)](https://cran.r-project.org/package=tangles)
 
