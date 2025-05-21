@@ -4,7 +4,7 @@ author: "Malone, B."
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Anonymization}
+  %\VignetteIndexEntry{Anonymization of Spatial Point Patterns and Raster Objects.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
