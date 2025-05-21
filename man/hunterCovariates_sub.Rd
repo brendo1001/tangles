@@ -1,5 +1,6 @@
 \name{hunterCovariates_sub}
 \docType{data}
+\alias{hunterCovariates_sub}
 \title{Environmental Covariate Rasters for a Subset of the Lower Hunter Valley, NSW}
 \description{
 A suite of GeoTIFF rasters representing environmental covariates for a subset of the Lower Hunter Valley in New South Wales, Australia. These covariates are used in digital soil mapping and terrain analysis.
@@ -37,7 +38,6 @@ These covariates are used in spatial prediction tasks, terrain classification, a
 }
 }
 \examples{
-library(ithir)
 library(terra)
 
 # Load and plot the elevation raster

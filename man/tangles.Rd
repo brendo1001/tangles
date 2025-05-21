@@ -74,9 +74,10 @@ res_sf <- tangles(data = sf_pts, depth = 3, exportShapefile = TRUE)
 
 ## Example 3: Using terra raster
 library(terra)
-r <- rast(nrows = 10, ncols = 10)
-values(r) <- runif(ncell(r))
-res_r <- tangles(data = r, depth = 3, rasterdata = TRUE, raster_object = TRUE)
+ext_path <- system.file("extdata", package = "tangles")
+rast.files <- list.files(path = ext_path, full.names = TRUE)
+rasters <- terra::rast(rast.files)
+res_r <- tangles(data = rasters, depth = 3, rasterdata = TRUE, raster_object = TRUE)
 str(res_r)
 }
 

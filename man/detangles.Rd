@@ -104,12 +104,12 @@ restored_from_sf <- detangles(
 
 ## EXAMPLE 3: Untangle raster data (terra)
 library(terra)
-
-# Create dummy raster
-r <- rast(nrows = 10, ncols = 10, vals = runif(100), extent = ext(0, 10, 0, 10))
+ext_path <- system.file("extdata", package = "tangles")
+rast.files <- list.files(path = ext_path, full.names = TRUE)
+rasters <- terra::rast(rast.files)
 
 # Anonymize raster
-tangled_rast <- tangles(data = r, depth = 3, rasterdata = TRUE, raster_object = TRUE)
+tangled_rast <- tangles(data = rasters, depth = 3, rasterdata = TRUE, raster_object = TRUE)
 
 # Restore raster
 restored_rast <- detangles(

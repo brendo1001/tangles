@@ -1,14 +1,30 @@
 Package: tangles
 Type: Package
-Title: Anonymization of Spatial Point Patterns and Raster Objects
-Version: 0.8.1
-Date: 2019-10-10
-Authors@R: c(person("Brendan", "Malone", email = "brendan.malone@csiro.au", role = c("cre", "aut")))
-Description: Spatial data anonymization preserves confidentiality. Using methods described in Zandbergen (2014) <doi:10.1155/2014/567049>, spatial data anonymization is achieved by dithering original spatial coordinates with combinations of randomized vertical, horizontal and rotational shifts. This can apply to non-grid spatial point patterns and raster objects, and the methods preserve the same spatial characteristics and relationships of the original data. Unique hash keying enables data subjected to anonymization sequences to be re-identified where required.  
-Depends: R (>= 3.0.1)
-Imports: raster, digest, sp
-Suggests: rasterVis, rgdal, knitr, rmarkdown
+Title: Anonymization of Spatial Point, Raster, and SF Objects
+Version: 2.0.1
+Date: 2025-05-20
+Authors@R: c(
+  person("Brendan", "Malone", email = "brendan.malone@csiro.au", role = c("cre", "aut")))
+Author: Brendan Malone [aut]
+Maintainer: Brendan Malone <brendan.malone@csiro.au>
+Description: 
+  Tools for anonymizing spatial datasets while preserving spatial structure and relationships. 
+  Original XY coordinates or raster geometries are transformed using randomized or predefined 
+  sequences of vertical shifts, horizontal shifts, and rotations. Compatible with point-based 
+  data in matrix, data.frame, or sf format, as well as terra raster objects. Supports reversible 
+  anonymization workflows, hash-based validation, shapefile export, and consistent tangling across 
+  related datasets using stored transformation sequences.
+Depends: 
+  R (>= 4.0)
+Imports:
+  terra,
+  sf,
+  digest
+Suggests:
+  knitr,
+  rmarkdown,
+  testthat
 VignetteBuilder: knitr
 License: GPL-2
-LazyData: no
 Encoding: UTF-8
+LazyData: false
