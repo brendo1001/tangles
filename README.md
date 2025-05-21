@@ -16,13 +16,20 @@ Anonymization is achieved via three modes of spatial shifts:
 
 The `tangles` package can entangle both non-gridded spatial point patterns and raster objects. It can also entangle data using a pre-defined entanglement sequence and can disentangle data back to their original spatial representations. Each entanglement process is given a unique hash key label to guarantee successful restoration of the original spatial structure.
 
-## Package installation
+## 📦 Package Installation
 
-Install `tangles` from GitHub using the `devtools` package:
+Install the development version of `tangles` from GitHub using the `devtools` package:
 
 ```r
-devtools::install_github("brendo1001/tangles")```
+# Install devtools if you haven't already
+install.packages("devtools")
+
+# Install tangles
+devtools::install_github("brendo1001/tangles")
+```
 
 
-## Contact
-`brendan.malone@csiro.au`
+
+## 📬 Contact
+
+[brendan.malone@csiro.au](mailto:brendan.malone@csiro.au)
