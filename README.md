@@ -21,7 +21,8 @@ The `tangles` package can entangle both non-gridded spatial point patterns and r
 Install `tangles` from GitHub using the `devtools` package:
 
 ```r
-devtools::install_github("brendo1001/tangles")
+devtools::install_github("brendo1001/tangles")```
+
 
 ## Contact
 `brendan.malone@csiro.au`

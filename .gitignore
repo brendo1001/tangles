@@ -4,3 +4,10 @@ doc
 .Rhistory
 .RData
 .Ruserdata
+
+# Package build artefacts
+.Rbuildignore
+build/
+doc/
+html/
+muddles/
