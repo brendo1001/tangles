@@ -47,10 +47,3 @@ jobs:
 
       - name: Run R CMD check
         run: R CMD check --as-cran .
-
-      - name: Upload check results
-        if: always()
-        uses: actions/upload-artifact@f84c48ca0e5ba1bd5b1e6a29a195da4e6dd1c29a
-        with:
-          name: check-results
-          path: tangles.Rcheck
