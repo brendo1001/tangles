@@ -54,13 +54,13 @@ Shapefiles are written without CRS metadata to preserve anonymity. Coordinates r
 \author{Brendan Malone}
 
 \references{
-\itemize{
-\item CM O'Keefe, S Otorepec, M Elliot, E Mackey, and K O'Hara (2017). \href{https://www.data61.csiro.au/en/Our-Work/Safety-and-Security/Privacy-Preservation/De-identification-Decision-Making-Framework}{The De-Identification Decision Making Framework}. CSIRO Reports EP173122 and EP175702.
-}
+  \itemize{
+    \item CM O’Keefe, S Otorepec, M Elliot, E Mackey, and K O’Hara (2017) The De-Identification Decision Making Framework. CSIRO Reports EP173122 and EP175702. \doi{10.4225/08/59c169433efd4}
+  }
 }
 
 \examples{
-
+\dontrun{
 ## Example 1: Tangling a point data.frame
 library(digest)
 set.seed(123)
@@ -106,7 +106,7 @@ tangled_rast <- tangler(
   stub = "r_demo",
   saveTangles = TRUE
 )
-}
+}}
 
 \keyword{methods}
 \keyword{spatial}

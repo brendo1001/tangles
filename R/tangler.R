@@ -23,7 +23,7 @@ tangler <- function(
 ) {
   ## Check for raster-unsafe transformations
   if (raster_object && any(!(tanglerInfo$unpicker$degree %in% c(0, 90, 180, 270, NA)))) {
-    stop("Rotation angles in detangler object are not suitable for raster alignment (must be multiples of 90°).")
+    stop("Rotation angles in detangler object are not suitable for raster alignment (must be multiples of 90 degrees).")
   }
   
   ## Extract coordinates

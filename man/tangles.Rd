@@ -54,12 +54,14 @@ If writing shapefiles, no CRS is assigned and no \code{.prj} file is written.
 \author{Brendan Malone}
 
 \references{
-\itemize{
-\item CM O'Keefe, S Otorepec, M Elliot, E Mackey, and K O'Hara (2017). \href{https://www.data61.csiro.au/en/Our-Work/Safety-and-Security/Privacy-Preservation/De-identification-Decision-Making-Framework}{The De-Identification Decision Making Framework}. CSIRO Reports EP173122 and EP175702.
-}
+  \itemize{
+    \item CM O’Keefe, S Otorepec, M Elliot, E Mackey, and K O’Hara (2017) The De-Identification Decision Making Framework. CSIRO Reports EP173122 and EP175702. \doi{10.4225/08/59c169433efd4}
+  }
 }
 
+
 \examples{
+\dontrun{
 ## Example 1: Using point data.frame
 library(digest)
 set.seed(1)
@@ -79,7 +81,7 @@ rast.files <- list.files(path = ext_path, full.names = TRUE)
 rasters <- terra::rast(rast.files)
 res_r <- tangles(data = rasters, depth = 3, rasterdata = TRUE, raster_object = TRUE)
 str(res_r)
-}
+}}
 
 \keyword{spatial}
 \keyword{anonymization}

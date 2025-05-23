@@ -1,5 +1,4 @@
 Meta
-doc
 .Rproj.user
 .Rhistory
 .RData
@@ -8,6 +7,4 @@ doc
 # Package build artefacts
 .Rbuildignore
 build/
-doc/
-html/
 muddles/

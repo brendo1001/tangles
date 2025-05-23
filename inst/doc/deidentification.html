@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Malone, B." />
+
+<meta name="date" content="2025-05-23" />
+
+<title>Anonymization of Spatial Point Patterns and Raster Objects.</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Anonymization of Spatial Point Patterns and
+Raster Objects.</h1>
+<h4 class="author">Malone, B.</h4>
+<h4 class="date">2025-05-23</h4>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This demo provides context and use cases for the three core functions
+of the <code>tangles</code> R package:</p>
+<ul>
+<li><code>tangles</code> – anonymizes spatial point patterns and raster
+objects.</li>
+<li><code>tangler</code> – re-applies a known anonymization to other
+data using a detangler object.</li>
+<li><code>detangles</code> – restores anonymized data back to original
+coordinates using a valid detangler.</li>
+</ul>
+<p>The main driver behind this package is confidentiality. While modern
+science is becoming increasingly open and collaborative, some spatial
+data—especially that which relates to sensitive locations—must be shared
+carefully. Anonymization allows us to retain spatial structure and
+support robust analysis while obscuring real-world locations.</p>
+<p><code>tangles</code> anonymizes data through randomized spatial
+transformations:</p>
+<ul>
+<li>Vertical shifts</li>
+<li>Horizontal shifts</li>
+<li>Rotational shifts</li>
+</ul>
+<p>Each transformation is stored with a hash-verified detangler,
+enabling reversible workflows and consistent anonymization across
+related datasets.</p>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p><code>tangles</code> accepts spatial data in the form of:</p>
+<ul>
+<li>Two-column matrices or data frames (X, Y coordinates)</li>
+<li><code>sf</code> POINT objects</li>
+<li><code>terra</code> raster layers or stacks</li>
+</ul>
+<p>It also allows exporting of anonymized point data to shapefiles if
+needed.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Load required libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tangles)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(digest)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co"># Load point data</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;HV_subsoilpH&quot;</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co"># Load raster data from files</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>ext_path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="at">package =</span> <span class="st">&quot;tangles&quot;</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>rast.files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="at">path =</span> ext_path, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>rasters <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(rast.files)</span></code></pre></div>
+</div>
+<div id="tangling-point-data" class="section level2">
+<h2>Tangling Point Data</h2>
+<p><code>tangles()</code> can be used directly on <code>sf</code>
+objects too. Here’s an example with shapefile export:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>xyData <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(HV_subsoilpH[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>tangles.out <span class="ot">&lt;-</span> <span class="fu">tangles</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">data =</span> xyData,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="at">depth =</span> <span class="dv">3</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="at">rasterdata =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="at">raster_object =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>  <span class="at">saveTangles =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>  <span class="at">exportShapefile =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  <span class="at">path =</span> <span class="fu">tempdir</span>()</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>)</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co"># Using sf input</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>df <span class="ot">&lt;-</span> HV_subsoilpH[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>sf_pts <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(df, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>))</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>tangles.sf.out <span class="ot">&lt;-</span> <span class="fu">tangles</span>(</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  <span class="at">data =</span> sf_pts,</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>  <span class="at">depth =</span> <span class="dv">3</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>  <span class="at">saveTangles =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a>  <span class="at">exportShapefile =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>  <span class="at">path =</span> <span class="fu">tempdir</span>()</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="tangling-raster-data" class="section level2">
+<h2>Tangling Raster Data</h2>
+<p>You can also use <code>tangles()</code> directly on raster stacks to
+anonymize them, particularly when you want to generate a new detangler
+object.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>tangles.ras.out <span class="ot">&lt;-</span> <span class="fu">tangles</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="at">data =</span> rasters,</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="at">depth =</span> <span class="dv">3</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="at">rasterdata =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="at">raster_object =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="at">saveTangles =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="at">path =</span> <span class="fu">tempdir</span>()</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="tangling-point-and-raster-data-together" class="section level2">
+<h2>Tangling Point and Raster Data Together</h2>
+<p>When tangling both point and raster data using the same
+transformation, it is important to constrain the rotation angles to
+preserve raster alignment. This can be done by setting
+<code>rasterdata = TRUE</code> in the <code>tangles()</code> call for
+point data. This ensures that any rotation is limited to 90°, 180°, or
+270°, which maintains compatibility with grid-based raster
+structures.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># 1. Tangling the point data</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>xyData <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(HV_subsoilpH[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>])</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>tangles.out <span class="ot">&lt;-</span> <span class="fu">tangles</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="at">data =</span> xyData,</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="at">depth =</span> <span class="dv">4</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="at">rasterdata =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="at">raster_object =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="at">saveTangles =</span> <span class="cn">FALSE</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>)</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co"># 2. Tangling the raster data using the same detangler</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>tangler.out <span class="ot">&lt;-</span> <span class="fu">tangler</span>(</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  <span class="at">data =</span> rasters,</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>  <span class="at">tanglerInfo =</span> tangles.out[[<span class="dv">2</span>]],</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>  <span class="at">raster_object =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>  <span class="at">stub =</span> <span class="st">&quot;combined&quot;</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>  <span class="at">saveTangles =</span> <span class="cn">FALSE</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>)</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co"># 3. Convert points to sf objects</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>original_pts <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(HV_subsoilpH, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>))</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>tangled_pts <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(<span class="fu">as.data.frame</span>(tangles.out[[<span class="dv">1</span>]]), <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>))</span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co"># 4. Plot both</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="fu">plot</span>(rasters[[<span class="dv">1</span>]], <span class="at">main =</span> <span class="st">&quot;Original Raster + Points&quot;</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="fu">plot</span>(original_pts, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="fu">plot</span>(tangler.out[[<span class="dv">1</span>]][[<span class="dv">1</span>]], <span class="at">main =</span> <span class="st">&quot;Tangled Raster + Points&quot;</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="fu">plot</span>(tangled_pts, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div>
+</div>
+<div id="detangling-back-to-original" class="section level2">
+<h2>Detangling Back to Original</h2>
+<p>To restore anonymized data to its original spatial configuration, use
+the <code>detangles()</code> function with the correct
+<code>tanglerInfo</code> and <code>hash_key</code>. This will reverse
+all transformations in the correct order.</p>
+<p>Note: - For successful restoration, the <code>hash_key</code> must
+match the one embedded in the detangler object. - If working with raster
+data, ensure the same constraints (e.g., right-angle rotations) were
+applied during tangling. - You can optionally export the restored point
+data as shapefiles using <code>exportShapefile = TRUE</code>, which is
+useful for downstream spatial analysis or visualization.</p>
+</div>
+<div id="final-notes" class="section level2">
+<h2>Final Notes</h2>
+<p>The <code>tangles</code> package provides a reversible and flexible
+method for anonymizing spatial data. It supports point and raster
+formats, and can be integrated into privacy-preserving data sharing
+workflows. While the anonymized coordinates are spatially transformed,
+internal spatial relationships (e.g., autocorrelation) remain intact,
+allowing robust analysis without revealing exact locations.</p>
+<p>For best results: - Use non-right-angle rotations only on point data.
+- For rasters, limit rotations to 90°, 180°, or 270°. - Consider
+exporting anonymized points as shapefiles when sharing with
+collaborators.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

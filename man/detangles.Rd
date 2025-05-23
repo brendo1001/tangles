@@ -60,13 +60,13 @@ Outputs can be safely saved and shared using the embedded hash key and transform
 \author{Brendan Malone}
 
 \references{
-\itemize{
-\item CM O'Keefe, S Otorepec, M Elliot, E Mackey, and K O'Hara (2017). \href{https://www.data61.csiro.au/en/Our-Work/Safety-and-Security/Privacy-Preservation/De-identification-Decision-Making-Framework}{The De-Identification Decision Making Framework}. CSIRO Reports EP173122 and EP175702.
-}
+  \itemize{
+    \item CM O’Keefe, S Otorepec, M Elliot, E Mackey, and K O’Hara (2017) The De-Identification Decision Making Framework. CSIRO Reports EP173122 and EP175702. \doi{10.4225/08/59c169433efd4}
+  }
 }
 
 \examples{
-
+\dontrun{
 ## EXAMPLE 1: Untangle point data.frame and export shapefile
 library(sf)
 set.seed(1)
@@ -120,8 +120,7 @@ restored_rast <- detangles(
   hash_key = tangled_rast[[2]]$hash,
   saveTangles = TRUE
 )
-
-}
+}}
 \keyword{methods}
 \keyword{spatial}
 \keyword{privacy}

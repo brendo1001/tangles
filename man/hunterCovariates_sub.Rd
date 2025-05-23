@@ -31,12 +31,13 @@ These covariates are used in spatial prediction tasks, terrain classification, a
 }
 
 \references{
-\itemize{
-  \item Gallant, J.C., Dowling, T.I. (2003). \href{http://dx.doi.org/10.1029/2002WR001426}{A multiresolution index of valley bottom flatness for mapping depositional areas}. \emph{Water Resources Research}, 39(12), 1347.
-  \item Malone, B.P., Hughes, P., McBratney, A.B., Minasny, B. (2014). \href{http://dx.doi.org/10.1016/j.geodrs.2014.08.001}{A model for the identification of terrons in the Lower Hunter Valley, Australia}. \emph{Geoderma Regional}, 1, 31–47.
-  \item Soil Security Laboratory (2015). \emph{Use R for Digital Soil Mapping Manual}. The University of Sydney, Australia.
+  \itemize{
+    \item Gallant, J.C., Dowling, T.I. (2003). A multiresolution index of valley bottom flatness for mapping depositional areas. \emph{Water Resources Research}, 39(12), 1347. \doi{10.1029/2002WR001426}
+    \item Malone, B.P., Hughes, P., McBratney, A.B., Minasny, B. (2014). A model for the identification of terrons in the Lower Hunter Valley, Australia. \emph{Geoderma Regional}, 1, 31–47. \doi{10.1016/j.geodrs.2014.08.001}
+  }
 }
-}
+
+
 \examples{
 library(terra)
 
