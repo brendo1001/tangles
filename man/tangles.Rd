@@ -1,9 +1,9 @@
 \name{tangles}
 \docType{methods}
 \alias{tangles}
-\title{Anonymize spatial point patterns and raster objects}
+\title{Anonymise spatial point patterns and raster objects}
 \description{
-Performs spatial anonymization ("tangling") of coordinates through randomized transformation sequences, preserving relative spatial relationships while obscuring true locations. Three transformation types are used: X shift, Y shift, and rotation around a random origin. The sequence and parameters used for anonymization are recorded and returned for later disentanglement.
+Performs spatial anonymisation ("tangling") of coordinates through randomized transformation sequences, preserving relative spatial relationships while obscuring true locations. Three transformation types are used: X shift, Y shift, and rotation around a random origin. The sequence and parameters used for anonymisation are recorded and returned for later disentanglement.
 }
 
 \usage{
@@ -22,7 +22,7 @@ saveTangles = FALSE, exportShapefile = FALSE, path = ".")
   
   \item{saveTangles}{Logical. If \code{TRUE}, writes both the transformed data and detangler metadata to the specified \code{path}.}
   
-  \item{exportShapefile}{Logical. If \code{TRUE} and input is a point-based dataset (not a raster), the anonymized coordinates are written to a shapefile. No CRS is assigned.}
+  \item{exportShapefile}{Logical. If \code{TRUE} and input is a point-based dataset (not a raster), the anonymised coordinates are written to a shapefile. No CRS is assigned.}
   
   \item{path}{Character. Path to directory where outputs will be saved. Defaults to current working directory.}
 }
@@ -46,7 +46,7 @@ For raster input, both \code{rasterdata = TRUE} and \code{raster_object = TRUE} 
 
 The detangler object is the critical output. It allows the same transformation sequence to be reversed or applied to related datasets.
 
-Coordinate reference systems are intentionally ignored in this function. Anonymized outputs do not have spatial meaning, but retain topological properties of the input.
+Coordinate reference systems are intentionally ignored in this function. Anonymised outputs do not have spatial meaning, but retain topological properties of the input.
 
 If writing shapefiles, no CRS is assigned and no \code{.prj} file is written.
 }
@@ -84,5 +84,5 @@ str(res_r)
 }}
 
 \keyword{spatial}
-\keyword{anonymization}
+\keyword{Anonymisation}
 \keyword{methods}

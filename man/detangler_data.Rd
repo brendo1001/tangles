@@ -2,7 +2,7 @@
 \docType{data}
 \alias{detangler_data}
 \title{Example object that is output from \code{tangles} function.}
-\description{This output that would be derived from the \code{tangles} function. It contains the instructions for anonymization of associated point pattern or raster data, or the re-identify tangled data.}
+\description{This output that would be derived from the \code{tangles} function. It contains the instructions for anonymisation of associated point pattern or raster data, or the re-identify tangled data.}
 \usage{data(detangler_data)}
 
 \format{

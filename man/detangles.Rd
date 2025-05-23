@@ -1,9 +1,9 @@
 \name{detangles}
 \docType{methods}
 \alias{detangles}
-\title{Revert anonymized point patterns or raster objects}
+\title{Revert anonymised point patterns or raster objects}
 \description{
-Reverses the spatial anonymization applied by the \code{\link{tangles}} function, restoring original XY coordinates or raster data. Requires a matching detangler object containing the transformation sequence and hash key. The restoration process preserves spatial relationships and supports both point and raster inputs.
+Reverses the spatial anonymisation applied by the \code{\link{tangles}} function, restoring original XY coordinates or raster data. Requires a matching detangler object containing the transformation sequence and hash key. The restoration process preserves spatial relationships and supports both point and raster inputs.
 }
 
 \usage{
@@ -22,7 +22,7 @@ detangles(
 \arguments{
   \item{data}{A 2-column \code{matrix} or \code{data.frame} of spatial coordinates, an \code{sf} POINT object, or a \code{terra::SpatRaster} object.} 
 
-  \item{tanglerInfo}{A detangler object returned by \code{tangles()}, containing the anonymization steps and associated hash key.}
+  \item{tanglerInfo}{A detangler object returned by \code{tangles()}, containing the anonymisation steps and associated hash key.}
 
   \item{raster_object}{Logical; set to \code{TRUE} if the input is a raster object. This enables value restoration for all raster cells.}
 
@@ -74,7 +74,7 @@ set.seed(1)
 # Simulate XY data
 pts <- data.frame(X = runif(100), Y = runif(100))
 
-# Anonymize
+# Anonymise
 tangled <- tangles(data = pts, depth = 4, saveTangles = FALSE)
 
 # Restore points
@@ -90,7 +90,7 @@ restored_pts <- detangles(
 ## EXAMPLE 2: Untangle from sf POINT input
 sf_pts <- st_as_sf(pts, coords = c("X", "Y"))
 
-# Anonymize sf object
+# Anonymise sf object
 tangled_sf <- tangles(data = sf_pts, depth = 3)
 
 # Restore using sf input
@@ -108,7 +108,7 @@ ext_path <- system.file("extdata", package = "tangles")
 rast.files <- list.files(path = ext_path, full.names = TRUE)
 rasters <- terra::rast(rast.files)
 
-# Anonymize raster
+# Anonymise raster
 tangled_rast <- tangles(data = rasters, depth = 3, rasterdata = TRUE, raster_object = TRUE)
 
 # Restore raster

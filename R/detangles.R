@@ -1,6 +1,6 @@
 ## Function for untangling transformed spatial coordinates or raster data
 ##
-## This function reverses the anonymization transformations applied by the `tangles()` function.
+## This function reverses the Anonymisation transformations applied by the `tangles()` function.
 ## It uses the accompanying detangler object, which stores the random sequence of transformations and parameters used.
 ## The function can restore either point coordinates or raster layers to their original form, depending on the input.
 ##

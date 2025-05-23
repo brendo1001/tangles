@@ -4,11 +4,11 @@
 
 # Tangles
 
-An R package for anonymization of spatial point patterns and raster objects.
+An R package for anonymisation of spatial point patterns and raster objects.
 
-This package achieves the relatively simple, yet useful, task of spatial anonymization. Anonymization is needed in situations where a data owner may not wish to share the actual spatial locations of their data, but is happy to share transformed data in a way that still permits valid spatial analysis.
+This package achieves the relatively simple, yet useful, task of spatial anonymisation. Anonymisation is needed in situations where a data owner may not wish to share the actual spatial locations of their data, but is happy to share transformed data in a way that still permits valid spatial analysis.
 
-Anonymization is achieved via three modes of spatial shifts:
+Anonymisation is achieved via three modes of spatial shifts:
 
 * Vertical shifts  
 * Lateral shifts  

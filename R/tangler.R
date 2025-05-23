@@ -1,7 +1,7 @@
 ## Function for tangling original coordinates using an existing transformation plan
 ##
 ## Applies an existing transformation sequence (from a tanglerInfo object) to a new dataset.
-## Useful for tangling related data to match previously anonymized datasets.
+## Useful for tangling related data to match previously Anonymised datasets.
 ##
 ## Inputs:
 ## - data: Either a 2-column matrix, data.frame, sf POINT object, or terra raster

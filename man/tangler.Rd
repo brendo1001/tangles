@@ -1,9 +1,9 @@
 \name{tangler}
 \docType{methods}
 \alias{tangler}
-\title{Re-apply anonymization using a stored detangler object}
+\title{Re-apply anonymisation using a stored detangler object}
 \description{
-For a given \code{detangler} object (from \code{\link{tangles}}), spatial coordinates or raster data can be re-anonymized using the same transformation sequence. This allows consistent tangling of related datasets using a fixed spatial masking.
+For a given \code{detangler} object (from \code{\link{tangles}}), spatial coordinates or raster data can be re-anonymised using the same transformation sequence. This allows consistent tangling of related datasets using a fixed spatial masking.
 }
 
 \usage{
@@ -21,7 +21,7 @@ tangler(
 \arguments{
   \item{data}{A 2-column \code{matrix}, \code{data.frame} of coordinates, an \code{sf} POINT object, or a \code{terra::SpatRaster} object.}
 
-  \item{tanglerInfo}{A detangler object returned by \code{\link{tangles}}, which encodes the anonymization steps and hash key.}
+  \item{tanglerInfo}{A detangler object returned by \code{\link{tangles}}, which encodes the anonymisation steps and hash key.}
 
   \item{raster_object}{Logical; set to \code{TRUE} if input is a raster object. This ensures the output is reconstructed as a \code{terra::SpatRaster}.}
 
@@ -66,7 +66,7 @@ library(digest)
 set.seed(123)
 pts <- data.frame(X = runif(100), Y = runif(100))
 
-# Anonymize original points
+# Anonymise original points
 t1 <- tangles(data = pts, depth = 4)
 
 # Tangling a second dataset using the same detangler

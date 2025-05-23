@@ -1,10 +1,10 @@
 ---
-title: "Anonymization of Spatial Point Patterns and Raster Objects."
+title: "Anonymisation of Spatial Point Patterns and Raster Objects."
 author: "Malone, B."
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Anonymization of Spatial Point Patterns and Raster Objects.}
+  %\VignetteIndexEntry{Anonymisation of Spatial Point Patterns and Raster Objects.}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,19 +12,19 @@ vignette: >
 ## Introduction
 This demo provides context and use cases for the three core functions of the `tangles` R package:
 
-* `tangles` – anonymizes spatial point patterns and raster objects.
-* `tangler` – re-applies a known anonymization to other data using a detangler object.
-* `detangles` – restores anonymized data back to original coordinates using a valid detangler.
+* `tangles` – Anonymises spatial point patterns and raster objects.
+* `tangler` – re-applies a known Anonymisation to other data using a detangler object.
+* `detangles` – restores Anonymised data back to original coordinates using a valid detangler.
 
-The main driver behind this package is confidentiality. While modern science is becoming increasingly open and collaborative, some spatial data—especially that which relates to sensitive locations—must be shared carefully. Anonymization allows us to retain spatial structure and support robust analysis while obscuring real-world locations.
+The main driver behind this package is confidentiality. While modern science is becoming increasingly open and collaborative, some spatial data—especially that which relates to sensitive locations—must be shared carefully. Anonymisation allows us to retain spatial structure and support robust analysis while obscuring real-world locations.
 
-`tangles` anonymizes data through randomized spatial transformations:
+`tangles` Anonymises data through randomized spatial transformations:
 
 * Vertical shifts
 * Horizontal shifts
 * Rotational shifts
 
-Each transformation is stored with a hash-verified detangler, enabling reversible workflows and consistent anonymization across related datasets.
+Each transformation is stored with a hash-verified detangler, enabling reversible workflows and consistent Anonymisation across related datasets.
 
 ## Setup
 
@@ -34,7 +34,7 @@ Each transformation is stored with a hash-verified detangler, enabling reversibl
 - `sf` POINT objects
 - `terra` raster layers or stacks
 
-It also allows exporting of anonymized point data to shapefiles if needed.
+It also allows exporting of Anonymised point data to shapefiles if needed.
 
 ```{r libraries, echo=TRUE, message=FALSE, warning=FALSE}
 # Load required libraries
@@ -82,7 +82,7 @@ tangles.sf.out <- tangles(
 
 ## Tangling Raster Data
 
-You can also use `tangles()` directly on raster stacks to anonymize them, particularly when you want to generate a new detangler object.
+You can also use `tangles()` directly on raster stacks to Anonymise them, particularly when you want to generate a new detangler object.
 
 ```{r tangles-raster, echo=TRUE, message=FALSE, warning=FALSE}
 tangles.ras.out <- tangles(
@@ -135,7 +135,7 @@ par(mfrow = c(1, 1))
 
 ## Detangling Back to Original
 
-To restore anonymized data to its original spatial configuration, use the `detangles()` function with the correct `tanglerInfo` and `hash_key`. This will reverse all transformations in the correct order.
+To restore Anonymised data to its original spatial configuration, use the `detangles()` function with the correct `tanglerInfo` and `hash_key`. This will reverse all transformations in the correct order.
 
 Note:
 - For successful restoration, the `hash_key` must match the one embedded in the detangler object.
@@ -168,9 +168,9 @@ detangled_rasters <- detangles(
 
 ## Final Notes
 
-The `tangles` package provides a reversible and flexible method for anonymizing spatial data. It supports point and raster formats, and can be integrated into privacy-preserving data sharing workflows. While the anonymized coordinates are spatially transformed, internal spatial relationships (e.g., autocorrelation) remain intact, allowing robust analysis without revealing exact locations.
+The `tangles` package provides a reversible and flexible method for Anonymising spatial data. It supports point and raster formats, and can be integrated into privacy-preserving data sharing workflows. While the Anonymised coordinates are spatially transformed, internal spatial relationships (e.g., autocorrelation) remain intact, allowing robust analysis without revealing exact locations.
 
 For best results:
 - Use non-right-angle rotations only on point data.
 - For rasters, limit rotations to 90°, 180°, or 270°.
-- Consider exporting anonymized points as shapefiles when sharing with collaborators.
+- Consider exporting Anonymised points as shapefiles when sharing with collaborators.

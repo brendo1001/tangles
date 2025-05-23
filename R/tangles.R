@@ -1,6 +1,6 @@
 ## Function for tangling original XY coordinates
 ##
-## This function performs spatial anonymization ("tangling") by applying a randomized sequence of spatial transformations to XY coordinate data.
+## This function performs spatial Anonymisation ("tangling") by applying a randomized sequence of spatial transformations to XY coordinate data.
 ## It is designed for situations where users want to share spatial data without revealing the actual geographic locations,
 ## while still allowing downstream spatial analysis.
 ##
