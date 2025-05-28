@@ -9,6 +9,28 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup_reset, include=FALSE}
+# Save original state
+old_opts    <- options()
+old_par     <- par(no.readonly = TRUE)
+old_wd      <- getwd()
+orig_search <- search()
+
+# On exit, restore state and detach any new packages
+on.exit({
+  options(old_opts)
+  par(old_par)
+  setwd(old_wd)
+  new_pkgs <- setdiff(search(), orig_search)
+  for (pkg in new_pkgs) {
+    if (grepl("^package:", pkg)) {
+      detach(pkg, character.only = TRUE, unload = TRUE)
+    }
+  }
+}, add = TRUE)
+```
+
+
 ## Introduction
 This demo provides context and use cases for the three core functions of the `tangles` R package:
 

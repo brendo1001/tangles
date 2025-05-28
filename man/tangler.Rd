@@ -14,7 +14,7 @@ tangler(
   stub = NULL,
   saveTangles = FALSE,
   exportShapefile = FALSE,
-  path = "."
+  path = NULL
 )
 }
 
@@ -31,7 +31,7 @@ tangler(
 
   \item{exportShapefile}{Logical; if \code{TRUE} and input is point-based, a shapefile of the tangled data is also exported (no CRS assigned).}
 
-  \item{path}{Directory to write output files if saving is enabled. Defaults to current working directory.}
+  \item{path}{Directory to write output files if saving is enabled. Defaults \code{tempdir()}.}
 }
 
 \value{
@@ -60,7 +60,7 @@ Shapefiles are written without CRS metadata to preserve anonymity. Coordinates r
 }
 
 \examples{
-\dontrun{
+\donttest{
 ## Example 1: Tangling a point data.frame
 library(digest)
 set.seed(123)

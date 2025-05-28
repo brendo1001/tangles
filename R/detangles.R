@@ -27,8 +27,13 @@ detangles <- function(
     hash_key = NULL,
     saveTangles = FALSE,
     exportShapefile = FALSE,
-    path = "."
+    path = NULL
 ) {
+  # If the user wants to save outputs but didn't supply a path,
+  # default into tempdir()
+  if ((saveTangles || exportShapefile) && is.null(path)) {
+    path <- tempdir()}
+  
   ## Validate detangler identity
   if (as.character(tanglerInfo$hash) != hash_key) {
     stop("ERROR: detangler object does not match these de-identified data")

@@ -35,8 +35,12 @@ tangles <- function(
     raster_object = FALSE,
     saveTangles = FALSE,
     exportShapefile = FALSE,
-    path = "."
+    path = NULL
 ) {
+  # If the user wants to save outputs but didn't supply a path,
+  # default into tempdir()
+  if ((saveTangles || exportShapefile) && is.null(path)) {
+    path <- tempdir()}
   
   # Handle raster input
   if (raster_object) {

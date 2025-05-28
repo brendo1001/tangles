@@ -19,8 +19,13 @@ tangler <- function(
     stub = NULL,
     saveTangles = FALSE,
     exportShapefile = FALSE,
-    path = "."
+    path = NULL
 ) {
+  # If the user wants to save outputs but didn't supply a path,
+  # default into tempdir()
+  if ((saveTangles || exportShapefile) && is.null(path)) {
+    path <- tempdir()}
+  
   ## Check for raster-unsafe transformations
   if (raster_object && any(!(tanglerInfo$unpicker$degree %in% c(0, 90, 180, 270, NA)))) {
     stop("Rotation angles in detangler object are not suitable for raster alignment (must be multiples of 90 degrees).")

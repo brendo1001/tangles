@@ -18,5 +18,7 @@
 }
 
 \examples{
-data(detangler_data)}
+data(detangler_data)
+detangler_data
+}
 \keyword{datasets}

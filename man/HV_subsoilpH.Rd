@@ -35,6 +35,5 @@ of rural industries, followed by dry land agricultural grazing systems.}
 \examples{
 data(HV_subsoilpH)
 summary(HV_subsoilpH)
-
 }
 \keyword{datasets}

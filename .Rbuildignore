@@ -6,4 +6,7 @@
 ^\.travis\.yml
 ^\.github$
 ^muddles$
-
+^\.git$               # ignore your Git metadata
+^\.Rcheck$            # ignore any leftover check directory
+^cran-comments\.md$   # ignore your CRAN comment template
+^deIDent\.Rproj$      # ignore your RStudio project file

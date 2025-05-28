@@ -8,7 +8,7 @@ Performs spatial anonymisation ("tangling") of coordinates through randomized tr
 
 \usage{
 tangles(data = NULL, depth = 3, rasterdata = FALSE, raster_object = FALSE, 
-saveTangles = FALSE, exportShapefile = FALSE, path = ".")
+saveTangles = FALSE, exportShapefile = FALSE, path = NULL)
 }
 
 \arguments{
@@ -24,7 +24,7 @@ saveTangles = FALSE, exportShapefile = FALSE, path = ".")
   
   \item{exportShapefile}{Logical. If \code{TRUE} and input is a point-based dataset (not a raster), the anonymised coordinates are written to a shapefile. No CRS is assigned.}
   
-  \item{path}{Character. Path to directory where outputs will be saved. Defaults to current working directory.}
+  \item{path}{Character. Path to directory where outputs will be saved. Defaults \code{tempdir()}.}
 }
 
 \value{
@@ -61,7 +61,7 @@ If writing shapefiles, no CRS is assigned and no \code{.prj} file is written.
 
 
 \examples{
-\dontrun{
+\donttest{
 ## Example 1: Using point data.frame
 library(digest)
 set.seed(1)

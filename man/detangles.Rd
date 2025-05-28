@@ -15,7 +15,7 @@ detangles(
   hash_key = NULL,
   saveTangles = FALSE,
   exportShapefile = FALSE,
-  path = "."
+  path = NULL
 )
 }
 
@@ -34,7 +34,7 @@ detangles(
 
   \item{exportShapefile}{Logical; if \code{TRUE} and input is point-based, a shapefile of the untangled coordinates is written (with undefined CRS).}
 
-  \item{path}{Directory to save output files if \code{saveTangles} or \code{exportShapefile} is enabled. Defaults to current working directory.}
+  \item{path}{Directory to save output files if \code{saveTangles} or \code{exportShapefile} is enabled. Defaults \code{tempdir()}.}
 }
 
 \value{
@@ -66,7 +66,7 @@ Outputs can be safely saved and shared using the embedded hash key and transform
 }
 
 \examples{
-\dontrun{
+\donttest{
 ## EXAMPLE 1: Untangle point data.frame and export shapefile
 library(sf)
 set.seed(1)
