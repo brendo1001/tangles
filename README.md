@@ -18,6 +18,12 @@ The `tangles` package can entangle both non-gridded spatial point patterns and r
 
 ## 📦 Package Installation
 
+Install `tangles` from CRAN with:
+
+```r
+install.packages("tangles")
+```
+
 Install the development version of `tangles` from GitHub using the `devtools` package:
 
 ```r
