@@ -121,7 +121,7 @@ tangles.ras.out <- tangles(
 
 When tangling both point and raster data using the same transformation, it is important to constrain the rotation angles to preserve raster alignment. This can be done by setting `rasterdata = TRUE` in the `tangles()` call for point data. This ensures that any rotation is limited to 90°, 180°, or 270°, which maintains compatibility with grid-based raster structures.
 
-```{r tangling-together, echo=TRUE, message=FALSE, warning=FALSE}
+```{r tangling-together, echo=TRUE, message=FALSE, warning=FALSE,  fig.width=7, fig.height=6}
 # 1. Tangling the point data
 xyData <- as.matrix(HV_subsoilpH[, 1:2])
 tangles.out <- tangles(
@@ -147,11 +147,15 @@ tangled_pts <- st_as_sf(as.data.frame(tangles.out[[1]]), coords = c("X", "Y"))
 
 # 4. Plot both
 par(mfrow = c(1, 2))
-plot(rasters[[1]], main = "Original Raster + Points")
-plot(original_pts, add = TRUE, pch = 16, col = "blue")
+r <- rasters[[1]]
+p <- original_pts
+terra::plot(r, main = "Original Raster + Points", reset = FALSE)
+plot(sf::st_geometry(p), add = TRUE, pch = 16, col = "red")
 
-plot(tangler.out[[1]][[1]], main = "Tangled Raster + Points")
-plot(tangled_pts, add = TRUE, pch = 16, col = "red")
+r <- tangler.out[[1]][[1]]
+p <- tangled_pts
+terra::plot(r, main = "Tangled Raster + Points", reset = FALSE)
+plot(sf::st_geometry(p), add = TRUE, pch = 16, col = "red")
 par(mfrow = c(1, 1))
 ```
 
