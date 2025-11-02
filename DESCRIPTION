@@ -2,13 +2,10 @@ Package: tangles
 Type: Package
 Title: Anonymisation of spatial point patterns and grids
 Version: 2.0.1
-Date: 2025-05-28
-Authors@R: person(given = "Brendan",
-                    family = "Malone",
-                    role = c("aut", "cre"),
-                    email = "brendan.malone@csiro.au")
-# --- Legacy block for CI linters: ---
-Author:    Brendan Malone [aut, cre]
+Date: 2025-11-01
+Authors@R: c(
+  person("Brendan", "Malone", role=c("cre", "aut"),  
+         email="brendan.malone@csiro.au", comment=c(ORCID="0000-0002-0473-8518")))
 Maintainer: Brendan Malone <brendan.malone@csiro.au>
 Description: Methods for anonymisation of spatial datasets while preserving spatial structure and relationships. Original coordinates or raster geometries are transformed using randomized or predefined vertical shifts, horizontal shifts, and rotations. Compatible with point-based data in 'matrix', 'data.frame', or 'sf' formats, as well as 'terra' raster objects. Supports reversible anonymisation workflows, hash-based validation, shapefile export, and consistent tangling across related datasets using stored transformation sequences. Approach informed by the De-Identification Decision Making Framework (CM O’Keefe, S Otorepec, M Elliot, E Mackey, and K O’Hara 2017) <doi:10.4225/08/59c169433efd4>.
 Depends: 
@@ -22,6 +19,9 @@ Suggests:
   rmarkdown,
   testthat
 VignetteBuilder: knitr
-License: GPL-2
+License: GPL (>=3)
 Encoding: UTF-8
-LazyData: false
+Language: en-US
+URL: https://github.com/brendo1001/tangles
+BugReports: https://github.com/brendo1001/tangles/issues/
+LazyLoad: yes
